@@ -1,0 +1,123 @@
+﻿<div class="modal fade" id="configuracoesPagina" tabindex="-1" role="dialog" aria-labelledby="configuracoesPagina" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="configuracoesPagina">Configurações da Página</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label>Tamanho da página</label>
+                        <div class="form">
+                            <label class="radio-inline"><input value="0" v-model="formulario.paginas[paginaAtual].dimensao" type="radio" name="optradio"> P</label>
+                            <label class="radio-inline"><input value="1" v-model="formulario.paginas[paginaAtual].dimensao" type="radio" name="optradio"> M</label>
+                            <label class="radio-inline"><input value="2" v-model="formulario.paginas[paginaAtual].dimensao" type="radio" name="optradio"> G</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <label v-if="formulario.paginas[paginaAtual].zoomLevel == 0">Utilizar Anterior</label>
+                        <label v-if="formulario.paginas[paginaAtual].zoomLevel != 0">Localização definida</label>
+                        <button class="btn btn-default" v-on:click="esconderFormulario()">Definir Localização</button>
+                    </div>
+                    <div class="col-sm-3">
+                        <label>Página final</label>
+                        <div class="form-group">
+                            @*@Html.LabelFor(model => model.Aprovado, htmlAttributes: new { @class = "control-label" })*@
+                            <div class="actions btn-group btn-group-justified">
+                                <label class="btn btn-default" v-bind:class="{active: formulario.paginas[paginaAtual].final == 'true'}">
+                                    <input type="radio" style="display:none" value="true" v-model="formulario.paginas[paginaAtual].final">Sim
+                                </label>
+                                <label class="btn btn-default" v-bind:class="{active: formulario.paginas[paginaAtual].final == 'false'}">
+                                    <input type="radio" style="display:none" value="false" v-model="formulario.paginas[paginaAtual].final">Não
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" @*v-if="formulario.paginas[paginaAtual].final == false || formulario.paginas[paginaAtual].final == 'false'"*@>
+                        <label>Próxima Página Padrão</label>
+                        <select class="form-control" v-model="formulario.paginas[paginaAtual].proximaPaginaId">
+                            <option v-for="(pagina, index) in formulario.paginas" :value="pagina.id" :selected="index == paginaAtual+1">{{ pagina.titulo }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div v-if="formulario.paginas[paginaAtual].final == false || formulario.paginas[paginaAtual].final == 'false'">
+                    <label>Próxima página</label>
+                    <button class="btn btn-primary" v-on:click="formulario.paginas[paginaAtual].adicionarRestricao">Adicionar</button>
+                    <div class="row" v-for="(restricao, indexR) in formulario.paginas[paginaAtual].restricoes">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>Nome da restrição</label>
+                                        <input v-model="restricao.nome" class="form-control" type="text">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Página de destino</label>
+                                        <select class="form-control" v-model="restricao.proximaPaginaId">
+                                            <option v-for="(pagina, index) in formulario.paginas" :value="pagina.id" :selected="index == (paginaAtual+1)">{{ pagina.titulo }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" v-on:click="formulario.paginas[paginaAtual].removerRestricao(indexR)">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div>
+                                    <div class="row" v-for="(conteudoRest, indexQ) in restricao.restricoesConteudosPagina">
+                                        <div class="col-sm-5" v-if="formulario.paginas.length > 0">
+                                            <label>Questão</label>
+                                            @*<select-component v-bind:conteudoRestricao="conteudoRest" v-bind:conteudos="formulario.paginas[paginaAtual].conteudos"></select-component>*@
+                                            <select class="form-control" v-model="conteudoRest.conteudoId" :onchange="conteudoRest.adicionarConteudoIndex(formulario.paginas[paginaAtual].conteudos)">
+                                                <option value="0" disabled selected>Selecione...</option>
+                                                <option v-for="(conteudo, index) in formulario.paginas[paginaAtual].conteudos" :value="conteudo.id">{{ conteudo.texto }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-5" v-if="formulario.paginas[paginaAtual].conteudos.length > 0">
+                                            <label>Opção</label>
+                                            <select class="form-control" v-model="conteudoRest.opcaoId">
+                                                <option value="-1" disabled selected>Selecione...</option>
+                                                <option v-for="opcao in formulario.paginas[paginaAtual].conteudos[conteudoRest.conteudoIndex].opcoes" :value="opcao.id">{{opcao.texto}}</option>
+                                                @*<option is="opcao-component" v-for="opcao in formulario.paginas[paginaAtual].conteudos[conteudoRest.conteudoIndex].opcoes" v-bind:opcao="opcao"></option>*@
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                            <button class="btn btn-danger" v-on:click="restricao.removerConteudo(indexQ)"><span class="fa fa-trash"></span></button>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                            <button type="button" class="btn btn-default" data-container="body" data-toggle="popover" data-placement="left" data-content="Vivamus sagittis.">
+                                                <span class="fa fa-search"></span>
+                                            </button>
+                                            @*<button class="btn btn-default" v-on:click="restricao.removerConteudo(indexQ)"><span class="fa fa-search"></span></button>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label>&nbsp;</label>
+                                        <button v-on:click="restricao.adicionarConteudo" class="btn btn-primary">Adicionar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-footer">
+                                @*The footer of the box*@
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button v-on:click="formulario.paginas[paginaAtual].salvarConfiguracaoPagina()" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,17 +12,19 @@ namespace MoveIlheus.Controllers
     public class HomeController : Controller
     {
         private readonly MoveIlheusContexto _context = new MoveIlheusContexto();
+        MoveIlheusServico servico;
 
         public HomeController(MoveIlheusContexto context)
         {
             _context = context;
+            servico = new MoveIlheusServico(context);
         }
-        MoveIlheusServico servico = new MoveIlheusServico();
+
         public IActionResult Index()
         {
-            var teste = _context.Forms.FirstOrDefault();
-            // return View(formulario);
-            return View();
+            var formulario = servico.ObterFormulariòParaEditar();
+            return View(formulario);
+            //return View();
         }
 
         public JsonResult FinalizarFormulario(Respondente respondente, DateTime inicio, DateTime fim)

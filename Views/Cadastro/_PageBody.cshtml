@@ -1,0 +1,38 @@
+﻿<div v-for="(conteudo, index) in formulario.paginas[paginaAtual].conteudos" :key="index" style="padding: 2%;" class="list-group-item col-sm-12" v-on:mouseenter="mouseEnter(index)" v-on:mouseleave="mouseLeave(index)" v-bind:class="{ hoverQuestion: editando[index], editingQuestion: index == conteudoEditando }">
+    <h5 class="questionHeader col-sm-12" style="z-index: 1;">
+        <span style="float: right;" v-if="conteudoEditando == index || conteudoEditando == -1">
+            <span v-if="index == conteudoEditando && editando[index]">
+                <input type="checkbox" v-model="conteudo.obrigatorio" />
+            </span>
+            <span v-if="index == conteudoEditando && editando[index] && conteudo.tipo == 11" class="fa fa-cogs btnEdit" data-toggle="modal" data-target="#modalConteudoDesenho"></span>
+            <span v-if="index == conteudoEditando && editando[index]" class="fa fa-cog btnEdit" data-toggle="modal" data-target="#modalRestricao"></span>
+            <span v-if="index == conteudoEditando && editando[index]" class="fa fa-trash btnEdit" v-on:click="formulario.paginas[paginaAtual].excluirConteudo(conteudo, index)"></span>
+            <span v-if="index != conteudoEditando && editando[index]" class="fa fa-edit btnEdit" v-on:click="editarConteudo(index)"></span>
+            <span v-if="index == conteudoEditando" class="fa fa-check btnEdit" v-on:click="conteudo.salvar(formulario.paginas[paginaAtual].id)"></span>
+            <span v-if="index != conteudoEditando" class="handle"><i class="fa fa-align-justify"></i></span>
+        </span>
+    </h5>
+    @*<br />*@
+    @Html.Partial("_Conteudos")
+    @*@Html.Partial("_ConteudoDesenho")*@
+    @Html.Partial("_Restricao")
+</div>
+<div v-if="conteudoEditando == -1" class="col-sm-12">
+    <div class="btn-group dropright" id="novoConteudo">
+        <button onclick="redimensionarPage()" v-on:click="adicionandoConteudo = !adicionandoConteudo" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="fa fa-plus"></span>
+            Adicionar Conteúdo
+        </button>
+        <div class="dropdown-menu">
+            <a v-for="opcao in options" v-on:click="selecionarTipoConteudo(opcao.value)" :value="opcao" class="dropdown-item" href="#">{{ opcao.text }}</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function redimensionarPage() {
+        //var pageHeight = $(".page").height();
+        //if (pageHeight < 350)
+        //    $(".page").height(350);
+    }
+</script>

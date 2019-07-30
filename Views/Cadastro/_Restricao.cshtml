@@ -1,0 +1,51 @@
+﻿<div v-if="index == conteudoEditando" class="modal fade" id="modalRestricao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Restrições</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div v-if="conteudoEditando != -1">
+                    <button class="btn btn-primary" v-on:click="conteudo.adicionarRestricao"><span class="fa fa-plus">Adicionar retrição</span></button>
+                    <div class="row" v-for="(restricao, index) in conteudo.restricoes">
+                        <br>
+                        <div class="col-sm-12">
+                            <label>Restrição {{ index + 1 }}</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" v-model="restricao.paginaAlvoId" :onchange="restricao.adicionarPaginaIndex(formulario.paginas)">
+                                <option value="0" disabled selected>Selecione...</option>
+                                <option v-for="(pagina, index) in formulario.paginas" :value="pagina.id">{{ pagina.titulo }}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3" v-if="restricao.paginaIndex != -1">
+                            <select class="form-control" v-model="restricao.conteudoAlvoId" :onchange="restricao.adicionarConteudoIndex(formulario.paginas[restricao.paginaIndex].conteudos)">
+                                <option value="0" disabled selected>Selecione...</option>
+                                <option v-if="restricao.paginaAlvoId != 0" v-for="(conteudo, index) in formulario.paginas[restricao.paginaIndex].conteudos" :value="conteudo.id">{{ conteudo.texto }}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3" v-if="restricao.conteudoIndex != -1">
+                            @*<select class="form-control" v-model="restricao.opcaoAlvoId" :disabled="restricao.conteudoId == 0">*@
+                            <select class="form-control" v-model="restricao.opcaoAlvoId">
+                                <option value="0" disabled selected>Selecione...</option>
+                                <option v-if="restricao.conteudoAlvoId != 0" v-for="(opcao, index) in formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].opcoes" :value="opcao.id">{{ opcao.texto }}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3" v-if="restricao.opcaoAlvoId != 0">
+                            <button class="btn btn-primary" v-on:click="restricao.ver"><span class="fa fa-search"></span></button>
+                            <button class="btn btn-danger" v-on:click="conteudo.excluirRestricao(index)"><span class="fa fa-trash"></span></button>
+                        </div>
+                    </div>
+                    @*{{ formulario.paginas[paginaAtual].conteudos[conteudoEditando].texto }}*@
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

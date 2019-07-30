@@ -11,7 +11,15 @@ namespace MoveIlheus.Controllers
 {
     public class CadastroController : Controller
     {
-        MoveIlheusServico servico = new MoveIlheusServico();
+        private readonly MoveIlheusContexto _context = new MoveIlheusContexto();
+        MoveIlheusServico servico;
+
+        public CadastroController(MoveIlheusContexto context)
+        {
+            _context = context;
+            servico = new MoveIlheusServico(context);
+        }
+
         public ActionResult Index()
         {
             var formulario = servico.ObterFormulariòParaEditar();

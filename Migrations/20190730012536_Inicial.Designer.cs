@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MoveIlheus.Migrations
 {
     [DbContext(typeof(MoveIlheusContexto))]
-    [Migration("20190728205424_Inicial")]
+    [Migration("20190730012536_Inicial")]
     partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,113 +24,143 @@ namespace MoveIlheus.Migrations
             modelBuilder.Entity("MoveIlheus.Models.Conteudo", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<string>("MensagemNovoDesenho");
+                    b.Property<string>("MensagemNovoDesenho")
+                        .HasColumnName("mensagem_novo_desenho");
 
-                    b.Property<bool>("Obrigatorio");
+                    b.Property<bool>("Obrigatorio")
+                        .HasColumnName("obrigatorio");
 
-                    b.Property<int>("PaginaId");
+                    b.Property<int>("Sequencia")
+                        .HasColumnName("sequencia");
 
-                    b.Property<int>("Sequencia");
+                    b.Property<string>("Texto")
+                        .HasColumnName("texto");
 
-                    b.Property<string>("Texto");
+                    b.Property<int>("Tipo")
+                        .HasColumnName("tipo");
 
-                    b.Property<int>("Tipo");
+                    b.Property<string>("TituloConteudosDesenho")
+                        .HasColumnName("titulo_conteudos_desenho");
 
-                    b.Property<string>("TituloConteudosDesenho");
+                    b.Property<int>("Valor")
+                        .HasColumnName("valor");
 
-                    b.Property<int>("Valor");
+                    b.Property<int>("paginaId")
+                        .HasColumnName("pagina_id");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PaginaId");
+                    b.HasIndex("paginaId");
 
-                    b.ToTable("Contents");
+                    b.ToTable("contents");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.ConteudoDesenho", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<int>("ConteudoId");
+                    b.Property<int>("ConteudoId")
+                        .HasColumnName("conteudo_id");
 
-                    b.Property<bool>("Obrigatorio");
+                    b.Property<bool>("Obrigatorio")
+                        .HasColumnName("obrigatorio");
 
-                    b.Property<int>("Sequencia");
+                    b.Property<int>("Sequencia")
+                        .HasColumnName("sequencia");
 
-                    b.Property<string>("Texto");
+                    b.Property<string>("Texto")
+                        .HasColumnName("texto");
 
-                    b.Property<int>("Tipo");
+                    b.Property<int>("Tipo")
+                        .HasColumnName("tipo");
 
-                    b.Property<int>("Valor");
+                    b.Property<int>("Valor")
+                        .HasColumnName("valor");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ConteudoId");
 
-                    b.ToTable("DrawingsContents");
+                    b.ToTable("drawings_contents");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.Coordenada", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<int>("DesenhoId");
+                    b.Property<int>("DesenhoId")
+                        .HasColumnName("desenho_id");
 
-                    b.Property<double>("Latitude");
+                    b.Property<double>("Latitude")
+                        .HasColumnName("latitude");
 
-                    b.Property<double>("Longitude");
+                    b.Property<double>("Longitude")
+                        .HasColumnName("longitude");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DesenhoId");
 
-                    b.ToTable("Coordinates");
+                    b.ToTable("coordinates");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.Desenho", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<int>("RespostaId");
+                    b.Property<int>("RespostaId")
+                        .HasColumnName("resposta_id");
 
-                    b.Property<int>("Tipo");
+                    b.Property<int>("Tipo")
+                        .HasColumnName("tipo");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RespostaId");
 
-                    b.ToTable("Drawings");
+                    b.ToTable("drawings");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.Formulario", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<string>("Nome");
+                    b.Property<string>("Nome")
+                        .HasColumnName("nome");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Forms");
+                    b.ToTable("forms");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.Opcao", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<int?>("ConteudoDesenhoId");
+                    b.Property<int?>("ConteudoDesenhoId")
+                        .HasColumnName("conteudo_desenho_id");
 
-                    b.Property<int?>("ConteudoId");
+                    b.Property<int?>("ConteudoId")
+                        .HasColumnName("conteudo_id");
 
-                    b.Property<string>("Texto");
+                    b.Property<string>("Texto")
+                        .HasColumnName("texto");
 
-                    b.Property<int>("Valor");
+                    b.Property<int>("Valor")
+                        .HasColumnName("valor");
 
                     b.HasKey("Id");
 
@@ -138,21 +168,26 @@ namespace MoveIlheus.Migrations
 
                     b.HasIndex("ConteudoId");
 
-                    b.ToTable("Options");
+                    b.ToTable("options");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.OpcaoResposta", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<int?>("OpcaoId");
+                    b.Property<int?>("OpcaoId")
+                        .HasColumnName("opcao_id");
 
-                    b.Property<int?>("RespostaDesenhoId");
+                    b.Property<int?>("RespostaDesenhoId")
+                        .HasColumnName("resposta_desenho_id");
 
-                    b.Property<int?>("RespostaId");
+                    b.Property<int?>("RespostaId")
+                        .HasColumnName("resposta_id");
 
-                    b.Property<int>("Valor");
+                    b.Property<int>("Valor")
+                        .HasColumnName("valor");
 
                     b.HasKey("Id");
 
@@ -162,31 +197,41 @@ namespace MoveIlheus.Migrations
 
                     b.HasIndex("RespostaId");
 
-                    b.ToTable("AnswerOptions");
+                    b.ToTable("answer_options");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.Pagina", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<int>("Dimensao");
+                    b.Property<int>("Dimensao")
+                        .HasColumnName("dimensao");
 
-                    b.Property<bool>("Final");
+                    b.Property<bool>("Final")
+                        .HasColumnName("final");
 
-                    b.Property<int>("FormularioId");
+                    b.Property<int>("FormularioId")
+                        .HasColumnName("formulario_id");
 
-                    b.Property<double>("Latitude");
+                    b.Property<double>("Latitude")
+                        .HasColumnName("latitude");
 
-                    b.Property<double>("Longitude");
+                    b.Property<double>("Longitude")
+                        .HasColumnName("longitude");
 
-                    b.Property<int?>("ProximaPaginaId");
+                    b.Property<int?>("ProximaPaginaId")
+                        .HasColumnName("proxima_pagina_id");
 
-                    b.Property<int>("Sequencia");
+                    b.Property<int>("Sequencia")
+                        .HasColumnName("sequencia");
 
-                    b.Property<string>("Titulo");
+                    b.Property<string>("Titulo")
+                        .HasColumnName("titulo");
 
-                    b.Property<int>("ZoomLevel");
+                    b.Property<int>("ZoomLevel")
+                        .HasColumnName("zoom_level");
 
                     b.HasKey("Id");
 
@@ -194,39 +239,49 @@ namespace MoveIlheus.Migrations
 
                     b.HasIndex("ProximaPaginaId");
 
-                    b.ToTable("Pages");
+                    b.ToTable("pages");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.Respondente", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<TimeSpan>("Duracao");
+                    b.Property<TimeSpan>("Duracao")
+                        .HasColumnName("duracao");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasColumnName("email");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Respondents");
+                    b.ToTable("respondents");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.Resposta", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<int>("ConteudoId");
+                    b.Property<int>("ConteudoId")
+                        .HasColumnName("conteudo_id");
 
-                    b.Property<bool>("Marcado");
+                    b.Property<bool>("Marcado")
+                        .HasColumnName("marcado");
 
-                    b.Property<int?>("OpcaoId");
+                    b.Property<int?>("OpcaoId")
+                        .HasColumnName("opcao_id");
 
-                    b.Property<int>("RespondenteId");
+                    b.Property<int>("RespondenteId")
+                        .HasColumnName("respondente_id");
 
-                    b.Property<string>("Texto");
+                    b.Property<string>("Texto")
+                        .HasColumnName("texto");
 
-                    b.Property<int>("Valor");
+                    b.Property<int>("Valor")
+                        .HasColumnName("valor");
 
                     b.HasKey("Id");
 
@@ -236,25 +291,32 @@ namespace MoveIlheus.Migrations
 
                     b.HasIndex("RespondenteId");
 
-                    b.ToTable("Answers");
+                    b.ToTable("answers");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.RespostaDesenho", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<int>("ConteudoDesenhoId");
+                    b.Property<int>("ConteudoDesenhoId")
+                        .HasColumnName("conteudo_desenho_id");
 
-                    b.Property<int>("DesenhoId");
+                    b.Property<int>("DesenhoId")
+                        .HasColumnName("desenho_id");
 
-                    b.Property<bool>("Marcado");
+                    b.Property<bool>("Marcado")
+                        .HasColumnName("marcado");
 
-                    b.Property<int?>("OpcaoId");
+                    b.Property<int?>("OpcaoId")
+                        .HasColumnName("opcao_id");
 
-                    b.Property<string>("Texto");
+                    b.Property<string>("Texto")
+                        .HasColumnName("texto");
 
-                    b.Property<int>("Valor");
+                    b.Property<int>("Valor")
+                        .HasColumnName("valor");
 
                     b.HasKey("Id");
 
@@ -264,43 +326,54 @@ namespace MoveIlheus.Migrations
 
                     b.HasIndex("OpcaoId");
 
-                    b.ToTable("DrawingsAnswers");
+                    b.ToTable("drawings_answers");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.RestricaoConteudo", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<int>("ConteudoAlvoId");
+                    b.Property<int>("ConteudoAlvoId")
+                        .HasColumnName("conteudo_alvo_id");
 
-                    b.Property<int>("ConteudoId");
+                    b.Property<int>("ConteudoId")
+                        .HasColumnName("conteudo_id");
 
-                    b.Property<string>("Nome");
+                    b.Property<string>("Nome")
+                        .HasColumnName("nome");
 
-                    b.Property<int>("OpcaoAlvoId");
+                    b.Property<int>("OpcaoAlvoId")
+                        .HasColumnName("opcao_alvo_id");
 
-                    b.Property<int>("PaginaAlvoId");
+                    b.Property<int>("PaginaAlvoId")
+                        .HasColumnName("pagina_alvo_id");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ConteudoId");
 
-                    b.ToTable("ContentRestrictions");
+                    b.ToTable("content_restrictions");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.RestricaoConteudoPagina", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<int>("ConteudoId");
+                    b.Property<int>("ConteudoId")
+                        .HasColumnName("conteudo_id");
 
-                    b.Property<string>("Nome");
+                    b.Property<string>("Nome")
+                        .HasColumnName("nome");
 
-                    b.Property<int>("OpcaoId");
+                    b.Property<int>("OpcaoId")
+                        .HasColumnName("opcao_id");
 
-                    b.Property<int>("RestricaoPaginaId");
+                    b.Property<int>("RestricaoPaginaId")
+                        .HasColumnName("restricao_pagina_id");
 
                     b.HasKey("Id");
 
@@ -310,32 +383,36 @@ namespace MoveIlheus.Migrations
 
                     b.HasIndex("RestricaoPaginaId");
 
-                    b.ToTable("ContentsRestrictionsPage");
+                    b.ToTable("contents_restrictions_page");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.RestricaoPagina", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id");
 
-                    b.Property<string>("Nome");
+                    b.Property<string>("Nome")
+                        .HasColumnName("nome");
 
-                    b.Property<int>("PaginaId");
+                    b.Property<int>("PaginaId")
+                        .HasColumnName("pagina_id");
 
-                    b.Property<int>("ProximaPaginaId");
+                    b.Property<int>("ProximaPaginaId")
+                        .HasColumnName("proxima_pagina_id");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PaginaId");
 
-                    b.ToTable("PageRestrictions");
+                    b.ToTable("page_restrictions");
                 });
 
             modelBuilder.Entity("MoveIlheus.Models.Conteudo", b =>
                 {
-                    b.HasOne("MoveIlheus.Models.Pagina", "Pagina")
+                    b.HasOne("MoveIlheus.Models.Pagina", "pagina")
                         .WithMany("Conteudos")
-                        .HasForeignKey("PaginaId")
+                        .HasForeignKey("paginaId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

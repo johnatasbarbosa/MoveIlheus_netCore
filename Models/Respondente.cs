@@ -6,11 +6,14 @@ using System.Web;
 
 namespace MoveIlheus.Models
 {
-    [Table("Respondents")]
+    [Table("respondents")]
     public class Respondente
     {
+        [Column("id")]
         public int Id { get; set; }
+        [Column("email")]
         public string Email { get; set; }
+        [Column("duracao")]
         public TimeSpan Duracao { get; set; }
 
         public virtual List<Resposta> Respostas { get; set; }

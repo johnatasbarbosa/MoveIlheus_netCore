@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+<link href="~/Content/Projeto.css" rel="stylesheet" />
+
+<style>
+    #map {
+        position: unset !important;
+        /*overflow: initial !important;
+        width: 100%;*/
+        height: 100%;
+    }
+</style>
+
+<div id="map" style="display: none;"></div>
+<div class="flex-center position-ref full-height">
+    <div class="content">
+        <div id="cadastro" class="container">
+            <div v-if="formulario.id == 0">
+                <div>
+                    <label>Ainda não há um formulario existente</label>
+                    <input v-model="formulario.nome" class="form-control" />
+                    <button v-on:click="salvarFormulario" class="btn btn-primary">Adicionar Formulário</button>
+                </div>
+            </div>
+            <div v-if="formulario.id != 0" id="formulario">
+                @Html.Partial("_ConfiguracaoPagina")
+                <h3 v-if="editandoTitulo == false" style="position: absolute; top: 5%; left: 1%;">
+                    <span class="fa fa-plus btnEdit" title="Nova página" v-on:click="formulario.novaPagina()"></span>
+                    <span class="fa fa-copy btnEdit" title="Duplicar página" v-on:click="formulario.duplicarPagina()"></span>
+                    <span class="fa fa-cog btnEdit" title="Configurações da página" data-toggle="modal" data-target="#configuracoesPagina"></span>
+                    <span class="fa fa-trash btnEdit" title="Excluri página" v-on:click="formulario.excluirPagina(paginaAtual)"></span>
+                </h3>
+                <div class="row">
+                    <div class="page" v-if="formulario.paginas.length > 0" v-bind:class="{ paginaPequena: formulario.paginas[paginaAtual].dimensao == 0, paginaMedia: formulario.paginas[paginaAtual].dimensao == 1, paginaGrande: formulario.paginas[paginaAtual].dimensao == 2 }">
+                        <div v-if="formulario.paginas.length > 0" style="margin: 10px;">
+                            <div class="pageHeader">
+                                @Html.Partial("_PageHeader")
+                            </div>
+                            <div class="pageBody row">
+                                <draggable :list="formulario.paginas[paginaAtual].conteudos" :options="{handle:'.handle'}" v-on:change="formulario.paginas[paginaAtual].atualizarSequenciaConteudos()" style="width: 100%;">
+                                    @Html.Partial("_PageBody")
+                                </draggable>
+                            </div>
+
+                            @Html.Partial("_ConteudoDesenho")
+
+                            <div class="pageFooter text-center" style="vertical-align: text-bottom;">
+                                <button v-bind:disabled="(conteudoEditando != -1)" v-on:click="paginaAtual = paginaAtual - 1" v-if="paginaAtual > 0" class="btn btn-default"><i class="fa fa-chevron-left"></i></button>
+                                <button v-bind:disabled="(conteudoEditando != -1)" v-on:click="paginaAtual = paginaAtual + 1" v-if="paginaAtual < formulario.paginas.length - 1" class="btn btn-default"><i class="fa fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div id="defineLocalizacao" class="form-group" style="position: absolute; top: 50%; left: 50%; display: none;">
+                    <button class="btn btn-default" v-on:click="mostrarFormulario()">Voltar</button>
+                    <button class="btn btn-success" v-on:click="formulario.paginas[paginaAtual].definirLocalizacao()">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var rota = "@Url.Action("Teste")";
+        var urlObterFormulariòParaEditar = "@Url.Action("ObterFormulariòParaEditar")";
+        var urlSalvarFormulario = "@Url.Action("SalvarFormulario")";
+        var urlSalvarPagina = "@Url.Action("SalvarPagina")";
+        var urlExcluirPagina = "@Url.Action("ExcluirPagina")";
+        var urlSalvarConfiguracaoPagina = "@Url.Action("SalvarConfiguracaoPagina")";
+        var urlSalvarConteudo = "@Url.Action("SalvarConteudo")";
+        var urlAtualizarSequenciaConteudos = "@Url.Action("AtualizarSequenciaConteudos")";
+        var urlExcluirConteudo = "@Url.Action("ExcluirConteudo")";
+        var urlSalvarNovaPagina = "@Url.Action("SalvarNovaPagina")";
+        
+        var urlAtualizarSequenciaConteudosDesenhos = "@Url.Action("AtualizarSequenciaConteudosDesenhos")";
+        var urlSalvarConteudoDesenho = "@Url.Action("SalvarConteudoDesenho")";
+        var urlExcluirConteudoDesenho = "@Url.Action("ExcluirConteudoDesenho")";
+
+        @using Newtonsoft.Json;
+        @{
+            JsonSerializerSettings jsSettings = new JsonSerializerSettings();
+            jsSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        }
+        var formularioModel = @Html.Raw(JsonConvert.SerializeObject(Model, Formatting.None, jsSettings));
+        console.log(formularioModel);        
+    </script>
+    <script src="~/lib/Plugins/sortable.min.js"></script>
+    <script src="~/lib/Plugins/vuedraggable.min.js"></script>
+    <script src="~/js/Cadastro/index.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA881HMoL7z4WG8xPJvXNgTeywhEwxA7JQ&libraries=places,drawing&callback=initMap"
+            async defer></script>
+    <script src="~/js/Cadastro/Mapa.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
+}
