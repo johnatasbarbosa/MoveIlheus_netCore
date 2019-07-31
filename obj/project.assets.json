@@ -12187,28 +12187,30 @@
     ]
   },
   "packageFolders": {
-    "/home/johnatas/.nuget/packages/": {},
-    "/usr/share/dotnet/sdk/NuGetFallbackFolder": {}
+    "C:\\Users\\johna\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/johnatas/Documentos/Projetos/MoveIlheus/MoveIlheus.csproj",
+      "projectUniqueName": "C:\\Users\\johna\\Documents\\MoveIlheus\\MoveIlheus\\MoveIlheus.csproj",
       "projectName": "MoveIlheus",
-      "projectPath": "/home/johnatas/Documentos/Projetos/MoveIlheus/MoveIlheus.csproj",
-      "packagesPath": "/home/johnatas/.nuget/packages/",
-      "outputPath": "/home/johnatas/Documentos/Projetos/MoveIlheus/obj/",
+      "projectPath": "C:\\Users\\johna\\Documents\\MoveIlheus\\MoveIlheus\\MoveIlheus.csproj",
+      "packagesPath": "C:\\Users\\johna\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\johna\\Documents\\MoveIlheus\\MoveIlheus\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/home/johnatas/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\johna\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

@@ -4,7 +4,7 @@
 }
 
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-<link href="~/Content/Projeto.css" rel="stylesheet" />
+<link href="~/css/Projeto.css" rel="stylesheet" />
 
 @Html.Partial("_Mapa")
 <div class="flex-center position-ref full-height">
@@ -32,7 +32,7 @@
             <div>
                 <div id="defineLocalizacao" class="form-group" style="position: absolute; top: 50%; left: 50%; display: none;">
                     <button class="btn btn-danger" v-on:click="cancelarDesenho()">Cancelar</button>
-                    @*<button class="btn btn-success" v-on:click="formulario.paginas[paginaAtual].definirLocalizacao()">Confirmar</button>*@
+                    <!-- <button class="btn btn-success" v-on:click="formulario.paginas[paginaAtual].definirLocalizacao()">Confirmar</button> -->
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@
     <script src="~/js/Home/index.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA881HMoL7z4WG8xPJvXNgTeywhEwxA7JQ&libraries=places,drawing&callback=initMap"
             async defer></script>
-    <script src="~/Scripts/Home/Mapa.js"></script>
+    <script src="~/js/Home/Mapa.js"></script>
 
     <script>
         $(document).ready(function () {

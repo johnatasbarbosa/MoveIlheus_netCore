@@ -1,5 +1,4 @@
-﻿@*form-group has-error has-feedback*@
-<div class="questionBody col-sm-12 form-group" style="z-index: 0;">
+﻿<div class="questionBody col-sm-12 form-group" style="z-index: 0;">
     <div v-bind:class="{ 'form-group has-error': conteudo.resposta.opcaoId == null && tentouPassar && conteudo.obrigatorio }">
         <div v-if="conteudo.tipo == 1">
             <h5>
@@ -87,7 +86,7 @@
                 <input type="range" v-model.number="conteudo.valor" min="1" max="100" class="slider" id="myRange">
                 <input v-model="conteudo.opcoes[1].texto" size="10" class="form-control" />
             </div>
-            <div v-if="index != conteudoEditando" style="text-align: center;" @*class="form-inline"*@>
+            <div v-if="index != conteudoEditando" style="text-align: center;">
                 <span style="float: left">{{ conteudo.opcoes[0].texto}}</span>
                 <input type="range" v-model.number="conteudo.resposta.valor" min="1" max="100" class="slider" id="myRange">
                 <span style="float: right">{{ conteudo.opcoes[1].texto}}</span>
@@ -99,7 +98,7 @@
                 <input v-if="index == conteudoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
             </h5>
             <div v-if="index != conteudoEditando">
-                <input type="number" @*style="width: 25%"*@ min="18" v-model.lazy="conteudo.resposta.valor" class="form-control">
+                <input type="number" min="18" v-model.lazy="conteudo.resposta.valor" class="form-control">
             </div>
         </div>
     </div>
@@ -111,7 +110,6 @@
             </h5>
             <div v-if="index != conteudoEditando">
                 <input type="text" class="form-control" v-model.lazy="conteudo.resposta.texto" placeholder="Digite sua resposta">
-                @*<span class="glyphicon glyphicon-remove form-control-feedback"></span>*@
             </div>
         </div>
         <div v-if="conteudo.tipo == 8">
@@ -129,7 +127,6 @@
                 <input v-if="index == conteudoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
             </h5>
             <div v-if="index != conteudoEditando">
-                @*<input type="text" class="form-control">*@
                 <input id="pac-input" class="controls form-control" type="text" placeholder="Search Box">
             </div>
         </div>
@@ -240,32 +237,3 @@
         </div>
     </div>
 </div>
-
-@*
-    Uma opcao
-MultiplaEscolha: 1
-ListaSuspensa: 3
-
-    Varias opcoes
-CaixaSelecao: 2
-MultiplasRespostas: 5
-
-    Valor
-Escala: 4
-RespostaNumerica: 13
-
-    Texto
-RespostaCurta: 7
-RespostaLonga: 8
-RespostaPesquisa: 15
-
-    Marcado
-CaixaConfirmacao: 14
-
-    Não colocar
-DivisaoValores: 6
-Descricao: 9
-Cabecalho: 10
-FerramentaDesenho: 11
-Grafico: 12
-*@

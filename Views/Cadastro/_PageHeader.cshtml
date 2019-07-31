@@ -8,7 +8,5 @@
     <h3>
         <span v-if="editandoTitulo == false" class="fa fa-edit btnEdit" v-on:click="editandoTitulo = !editandoTitulo"></span>
         <span v-if="editandoTitulo == true" class="fa fa-check btnEdit" v-on:click="editandoTitulo = !editandoTitulo; formulario.paginas[paginaAtual].salvarPagina();"></span>
-        @*<span class="fa fa-cog btnEdit" data-toggle="modal" data-target="#configuracoesPagina"></span>
-            <span class="fa fa-trash btnEdit" v-on:click="formulario.excluirPagina(paginaAtual)"></span>*@
     </h3>
 </div>

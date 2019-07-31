@@ -494,7 +494,15 @@ function Conteudo(conteudo) {
         App.formulario.paginas[App.paginaDesenho].conteudos[App.conteudoSelecionado].resposta.desenhos[App.desenhoEditando].respostasDesenho = resposta;
         $('#modalConteudoDesenho').modal('hide');
 
-        if (App.editandoDesenho)
+        //armengue
+        var qtd = 0;
+        App.formulario.paginas[App.paginaAtual].conteudos.forEach(function (c) {
+            if (c.tipo == 11)
+                qtd++;
+        })
+        //fim armengue
+
+        if (App.editandoDesenho || qtd == 1)
             App.mostrarFormulario();
         else
             $('#modalVerificarNovoDesenho').modal('show');
@@ -519,6 +527,8 @@ function Conteudo(conteudo) {
                     return self.resposta.texto != "";
                 case TipoConteudo.RespostaNumerica:
                     return self.resposta.texto != "";
+                case TipoConteudo.FerramentaDesenho:
+                    return self.resposta.desenhos.length > 0;
             }
         }
         else
@@ -991,7 +1001,16 @@ window.App = new Vue({
             this.desenhoEditando = this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].resposta.desenhos.length - 1;
             $("#defineLocalizacao").hide();
             this.editandoDesenho = false;
-            $('#modalConteudoDesenho').modal('show');
+
+            var qtd = 0;
+            App.formulario.paginas[App.paginaAtual].conteudos.forEach(function (c) {
+                if (c.tipo == 11)
+                    qtd++;
+            })
+            if (qtd == 1)
+                this.mostrarFormulario();
+            else
+                $('#modalConteudoDesenho').modal('show');
         },
         editarDesenho: function (indexPagina, indexConteudo, indexDesenho) {
             this.paginaDesenho = indexPagina;

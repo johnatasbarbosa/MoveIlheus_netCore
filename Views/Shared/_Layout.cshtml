@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MoveIlheus</title>
 
-    <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <!-- <environment include="Development">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -14,7 +14,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
               crossorigin="anonymous"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
-    </environment>
+    </environment> -->
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/lib/Css/AdminLTE.css" />
     <link rel="stylesheet" href="~/lib/Css/font-awesome.css" />
@@ -48,14 +48,14 @@
             @RenderBody()
         </main>
     </div>
-
+<!-- 
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2019 - MoveIlheus - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer> -->
 
-    <environment include="Development">
+    <!-- <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     </environment>
@@ -72,7 +72,11 @@
                 crossorigin="anonymous"
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
-    </environment>
+    </environment> -->
+    <script src="~/lib/Plugins/jquery-3.4.1.min.js"></script>
+    <script src="~/lib/Plugins/popper.min.js"></script>
+    <script src="~/lib/Plugins/bootstrap.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     
     <script src="~/lib/Plugins/modernizr-2.8.3.js"></script>

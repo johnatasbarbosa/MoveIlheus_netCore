@@ -1,44 +1,21 @@
-﻿<div @*v-if="conteudoEditando != -1"*@ @*v-if="index == conteudoEditando && conteudo.tipo == 11"*@ class="modal fade" id="modalConteudoDesenho" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+﻿<div class="modal fade" id="modalConteudoDesenho" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" v-if="formulario.paginas[paginaDesenho] && formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado]">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">{{ formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].tituloConteudosDesenho }}</h5>
-                <button type="button" class="close" @*data-dismiss="modal"*@ aria-label="Close" v-on:click="excluirDesenho()">
+                <button type="button" class="close" aria-label="Close" v-on:click="excluirDesenho()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" style="padding-top: unset;">
-                @*<div v-if="conteudoEditando != -1">
-                    <draggable :list="formulario.paginas[paginaDesenho].conteudos[conteudoEditando].conteudosDesenhos" :options="{handle:'.handle'}" v-on:change="formulario.paginas[paginaDesenho].conteudos[conteudoEditando].atualizarSequenciaConteudosDesenho()" style="width: 100%;">*@
-                        <div v-for="(conteudo, index) in formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].conteudosDesenhos" @*class="list-group-item"*@>
-                            @*<h5 class="questionHeader col-sm-12" style="z-index: 1;">
-                                <span style="float: right;" v-if="conteudoDesenhoEditando == index || conteudoDesenhoEditando == -1">
-                                    <span v-if="index == conteudoDesenhoEditando" class="fa fa-trash btnEdit" v-on:click="formulario.paginas[paginaDesenho].conteudos[conteudoEditando].excluirConteudoDesenho(conteudo, index)"></span>
-                                    <span v-if="index != conteudoDesenhoEditando" class="fa fa-edit btnEdit" v-on:click="conteudoDesenhoEditando = index"></span>
-                                    <span v-if="index == conteudoDesenhoEditando" class="fa fa-check btnEdit" v-on:click="conteudo.salvar(formulario.paginas[paginaDesenho].conteudos[conteudoEditando].id)"></span>
-                                    <span v-if="index != conteudoDesenhoEditando" class="handle"><i class="fa fa-car"></i></span>
-                                </span>
-                            </h5>*@
-                            <p>
-                                @Html.Partial("_ConteudosDesenho")
-                            </p>
-                        </div>
-                    @*</draggable>*@
-                    @*<div v-if="conteudoDesenhoEditando == -1" class="col-sm-12">
-                        <div class="btn-group dropright">
-                            <button v-on:click="adicionandoConteudo = !adicionandoConteudo" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="fa fa-plus"></span>
-                                Adicionar Conteúdo
-                            </button>
-                            <div class="dropdown-menu">
-                                <a v-for="opcao in optionsDesenhos" v-on:click="selecionarTipoConteudoDesenho(opcao.value)" :value="opcao" class="dropdown-item" href="#">{{ opcao.text }}</a>
-                            </div>
-                        </div>
-                    </div>*@
-                @*</div>*@
+                <div v-for="(conteudo, index) in formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].conteudosDesenhos">
+                    <p>
+                        @Html.Partial("_ConteudosDesenho")
+                    </p>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" tabindex="-1" class="btn btn-danger" @*data-dismiss="modal"*@ v-on:click="excluirDesenho()">Excluir</button>
+                <button type="button" tabindex="-1" class="btn btn-danger" v-on:click="excluirDesenho()">Excluir</button>
                 <button type="button" class="btn btn-primary" v-on:click="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].salvarRespostasDesenho()">Save changes</button>
             </div>
         </div>

@@ -42,13 +42,13 @@ function initMap() {
         //    drawingModes: ['marker', 'circle', 'polygon', 'polyline', 'rectangle']
         //},
         //markerOptions: { icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png' },
-        markerOptions: {
-            animation: google.maps.Animation.DROP,
-            icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'),
-            draggable: true,
-            flat: true,
-            raiseOnDrag: true
-        },
+        //markerOptions: {
+        //    animation: google.maps.Animation.DROP,
+        //    icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'),
+        //    //draggable: true,
+        //    flat: true,
+        //    raiseOnDrag: true
+        //},
         polygonOptions: {
             fillColor: '#cccccc',
             fillOpacity: 0.5,

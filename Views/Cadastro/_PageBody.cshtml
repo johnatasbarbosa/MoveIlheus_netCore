@@ -12,9 +12,7 @@
             <span v-if="index != conteudoEditando" class="handle"><i class="fa fa-align-justify"></i></span>
         </span>
     </h5>
-    @*<br />*@
     @Html.Partial("_Conteudos")
-    @*@Html.Partial("_ConteudoDesenho")*@
     @Html.Partial("_Restricao")
 </div>
 <div v-if="conteudoEditando == -1" class="col-sm-12">

@@ -1,22 +1,3 @@
-﻿<div v-for="(conteudo, index) in formulario.paginas[paginaAtual].conteudos" style="padding: 2%;" class="col-sm-12" v-if="conteudo.restricoesValidas == true" @*v-on:mouseenter="hoverConteudo(index)" v-on:mouseleave="hoverConteudo(index)" v-bind:class="{ hoverQuestion: editando[index], editingQuestion: index == conteudoEditando }"*@>
-    @*<h5 class="questionHeader col-sm-12">
-        <span style="float: right;" v-if="conteudoEditando == index || conteudoEditando == -1">
-            <span v-if="editando[index]" class="fa fa-cog btnEdit" v-on:click="conteudo.abrirModalRestricao" data-toggle="modal" data-target="#modalRestricao"></span>
-            <span v-if="editando[index]" class="fa fa-trash btnEdit" v-on:click="formulario.paginas[paginaAtual].removerConteudo(index)"></span>
-            <span v-if="index != conteudoEditando && editando[index]" class="fa fa-edit btnEdit" v-on:click="editarConteudo(index)"></span>
-            <span v-if="index == conteudoEditando" class="fa fa-check btnEdit" v-on:click="salvarConteudo()"></span>
-        </span>
-    </h5>*@
+﻿<div v-for="(conteudo, index) in formulario.paginas[paginaAtual].conteudos" style="padding: 2%;" class="col-sm-12" v-if="conteudo.restricoesValidas == true">
     @Html.Partial("_Conteudos")
 </div>
-@*<div v-if="conteudoEditando == -1" class="col-sm-12">
-    <div class="btn-group dropright">
-        <button v-on:click="adicionandoConteudo = !adicionandoConteudo" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="fa fa-plus"></span>
-            Adicionar Conteúdo
-        </button>
-        <div class="dropdown-menu">
-            <a v-for="opcao in options" v-on:click="selecionarTipoConteudo(opcao.value)" :value="opcao" class="dropdown-item" href="#">{{ opcao.text }}</a>
-        </div>
-    </div>
-</div>*@

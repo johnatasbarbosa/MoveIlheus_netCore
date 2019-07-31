@@ -33,7 +33,7 @@
             </content>
         </ul>
         <div v-if="index != conteudoDesenhoEditando" v-for="(opcao, indexQ) in conteudo.opcoes">
-            <input type="checkbox" @*name="opcoes"*@ :name="'opcoesCD' + conteudo.id" :value="opcao.id" v-model="conteudo.resposta.opcoesView">
+            <input type="checkbox" :name="'opcoesCD' + conteudo.id" :value="opcao.id" v-model="conteudo.resposta.opcoesView">
             <span>{{ opcao.texto }}</span>
         </div>
     </div>
@@ -203,7 +203,7 @@
             <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
         </h5>
         <div v-if="index != conteudoDesenhoEditando">
-            <input type="number" @*style="width: 25%"*@ min="18" v-model.lazy="conteudo.resposta.texto" class="form-control">
+            <input type="number" min="18" v-model.lazy="conteudo.resposta.texto" class="form-control">
         </div>
     </div>
 </div>

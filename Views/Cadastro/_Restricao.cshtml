@@ -28,7 +28,7 @@
                             </select>
                         </div>
                         <div class="col-sm-3" v-if="restricao.conteudoIndex != -1">
-                            @*<select class="form-control" v-model="restricao.opcaoAlvoId" :disabled="restricao.conteudoId == 0">*@
+                            <!-- <select class="form-control" v-model="restricao.opcaoAlvoId" :disabled="restricao.conteudoId == 0"> -->
                             <select class="form-control" v-model="restricao.opcaoAlvoId">
                                 <option value="0" disabled selected>Selecione...</option>
                                 <option v-if="restricao.conteudoAlvoId != 0" v-for="(opcao, index) in formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].opcoes" :value="opcao.id">{{ opcao.texto }}</option>
@@ -39,7 +39,7 @@
                             <button class="btn btn-danger" v-on:click="conteudo.excluirRestricao(index)"><span class="fa fa-trash"></span></button>
                         </div>
                     </div>
-                    @*{{ formulario.paginas[paginaAtual].conteudos[conteudoEditando].texto }}*@
+                    <!-- {{ formulario.paginas[paginaAtual].conteudos[conteudoEditando].texto }} -->
                 </div>
             </div>
             <div class="modal-footer">
