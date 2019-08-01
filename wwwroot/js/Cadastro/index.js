@@ -104,17 +104,17 @@ function ConteudoDesenho(conteudoDesenho) {
         }
 
         self.conteudoId = conteudoId;
-        App.$http.post(urlSalvarConteudoDesenho, { conteudo: this }).then(response => {
+        App.$http.post(urlSalvarConteudoDesenho, JSON.stringify(this)).then(response => {
             var result = response.body;
             console.log(response.body);
-            var conteudoId = response.body.Id;
+            var conteudoId = response.body.id;
             if (self.id == 0) {
                 self.id = conteudoId;
             }
             conteudoId = self.id;
             self.opcoes.forEach(function (opcao, index) {
                 opcao.conteudoId = conteudoId;
-                opcao.id = response.body.Ids[index];
+                opcao.id = response.body.ids[index];
             })
 
             if (self.tipo == TipoConteudo.MultiplasRespostas) {
@@ -262,7 +262,7 @@ function Formulario(formulario) {
     self.novaPagina = function () {
         var novaPagina = new Pagina();
         novaPagina.formularioId = self.id;
-        App.$http.post(urlSalvarPagina, { pagina: novaPagina }).then(response => {
+        App.$http.post(urlSalvarPagina, JSON.stringify(novaPagina)).then(response => {
             var result = response.body;
             console.log(response.body);
             var paginaId = response.body.Id;
@@ -275,7 +275,7 @@ function Formulario(formulario) {
         });
     }
     self.excluirPagina = function () {
-        App.$http.post(urlExcluirPagina, { pagina: self.paginas[App.paginaAtual] }).then(response => {
+        App.$http.post(urlExcluirPagina, JSON.stringify(self.paginas[App.paginaAtual])).then(response => {
             var result = response.body;
             console.log(response.body);
 
@@ -312,7 +312,7 @@ function Formulario(formulario) {
             })
         })
         console.log(novaPagina);
-        App.$http.post(urlSalvarNovaPagina, { pagina: novaPagina }).then(response => {
+        App.$http.post(urlSalvarNovaPagina, JSON.stringify(novaPagina)).then(response => {
             var result = response.body;
             console.log(response.body);
             //var paginaId = response.body.Id;
@@ -377,7 +377,7 @@ function Pagina(pagina) {
     
     self.excluirConteudo = function (conteudo, index) {
         if (conteudo.id != 0) {
-            App.$http.post(urlExcluirConteudo, { conteudo: conteudo }).then(response => {
+            App.$http.post(urlExcluirConteudo, JSON.stringify(conteudo)).then(response => {
                 var result = response.body;
                 console.log(response.body);
 
@@ -404,7 +404,7 @@ function Pagina(pagina) {
         self.restricoes.splice(index, 1);
     }
     self.salvarConfiguracaoPagina = function () {
-        App.$http.post(urlSalvarConfiguracaoPagina, { pagina: self }).then(response => {
+        App.$http.post(urlSalvarConfiguracaoPagina, JSON.stringify(self)).then(response => {
             var result = response.body;
             console.log(response.body);
 
@@ -424,7 +424,7 @@ function Pagina(pagina) {
 
 
     self.salvarPagina = function () {
-        App.$http.post(urlSalvarPagina, { pagina: this }).then(response => {
+        App.$http.post(urlSalvarPagina, JSON.stringify(this)).then(response => {
             var result = response.body;
             console.log(response.body);
 
@@ -439,7 +439,7 @@ function Pagina(pagina) {
             conteudo.sequencia = index;
         })
         
-        App.$http.post(urlAtualizarSequenciaConteudos, { conteudos: self.conteudos }).then(response => {
+        App.$http.post(urlAtualizarSequenciaConteudos, JSON.stringify(self.conteudos)).then(response => {
             var result = response.body;
             console.log(response.body);
         }, response => {
@@ -532,21 +532,23 @@ function Conteudo(conteudo) {
         }
 
         self.paginaId = paginaId;
-        App.$http.post(urlSalvarConteudo, { conteudo: this }).then(response => {
+        console.log("conteudo", this);
+        console.log("conteudo", JSON.stringify(this));
+        App.$http.post(urlSalvarConteudo, JSON.stringify(this) ).then(response => {
             var result = response.body;
             console.log(response.body);
-            var conteudoId = response.body.Id;
+            var conteudoId = response.body.id;
             if (self.id == 0) {
                 self.id = conteudoId;
             }
             conteudoId = self.id;
             self.opcoes.forEach(function (opcao, index) {
                 opcao.conteudoId = conteudoId;
-                opcao.id = response.body.Ids[index];
+                opcao.id = response.body.ids[index];
             })
             self.restricoes.forEach(function (restricao, index) {
                 restricao.conteudoId = conteudoId;
-                restricao.id = response.body.Ids2[index];
+                restricao.id = response.body.ids2[index];
             })
 
             if (self.tipo == TipoConteudo.MultiplasRespostas) {
@@ -565,7 +567,7 @@ function Conteudo(conteudo) {
 
     self.excluirConteudoDesenho = function (conteudo, index) {
         if (conteudo.id != 0) {
-            App.$http.post(urlExcluirConteudoDesenho, { conteudo: conteudo }).then(response => {
+            App.$http.post(urlExcluirConteudoDesenho, JSON.stringify(conteudo)).then(response => {
                 var result = response.body;
                 console.log(response.body);
 
@@ -588,7 +590,7 @@ function Conteudo(conteudo) {
             conteudo.sequencia = index;
         })
 
-        App.$http.post(urlAtualizarSequenciaConteudosDesenhos, { conteudos: self.conteudosDesenhos }).then(response => {
+        App.$http.post(urlAtualizarSequenciaConteudosDesenhos, JSON.stringify(self.conteudosDesenhos)).then(response => {
             var result = response.body;
             console.log(response.body);
         }, response => {
@@ -790,7 +792,7 @@ window.App = new Vue({
             this.formulario.nome = "Meu formulário";
             var data = JSON.stringify({ Formulario: this.formulario });
             console.log(data);
-            this.$http.post(urlSalvarFormulario, { formulario: this.formulario }).then(response => {
+            this.$http.post(urlSalvarFormulario, JSON.stringify(this.formulario)).then(response => {
                 // get status
                 response.status;
 

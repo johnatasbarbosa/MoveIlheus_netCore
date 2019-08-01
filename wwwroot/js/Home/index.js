@@ -466,9 +466,11 @@ function Conteudo(conteudo) {
         if(self.valor == 1)
             drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
         else if (self.valor == 2)
-            drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
+            drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
+            //drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
         else if (self.valor == 3)
-            drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+            drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
+            //drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
     }
 
     self.novoDesenho = function (novoDesenho) {
@@ -483,6 +485,7 @@ function Conteudo(conteudo) {
         }
     }
     self.salvarRespostasDesenho = function () {
+        console.log("salvarRespostasDesenho");
         var resposta = [];
         self.conteudosDesenhos.forEach(function (conteudo) {
             console.log("sadasd");
@@ -494,19 +497,26 @@ function Conteudo(conteudo) {
         App.formulario.paginas[App.paginaDesenho].conteudos[App.conteudoSelecionado].resposta.desenhos[App.desenhoEditando].respostasDesenho = resposta;
         $('#modalConteudoDesenho').modal('hide');
 
-        //armengue
-        var qtd = 0;
-        App.formulario.paginas[App.paginaAtual].conteudos.forEach(function (c) {
-            if (c.tipo == 11)
-                qtd++;
-        })
-        //fim armengue
-
-        if (App.editandoDesenho || qtd == 1)
+        if (App.editandoDesenho || self.value == 3)
             App.mostrarFormulario();
         else
             $('#modalVerificarNovoDesenho').modal('show');
         //App.mostrarFormulario();
+    }
+    self.salvarRespostasDesenhos = function () {
+        console.log("salvarRespostasDesenhos");
+        var resposta = [];
+        self.conteudosDesenhos.forEach(function (conteudo) {
+            console.log("sadasd");
+            console.log(conteudo.resposta.texto);
+            resposta.push(conteudo.resposta);
+            conteudo.resposta = new RespostaDesenho({ ConteudoDesenhoId: conteudo.id });
+            console.log(conteudo.resposta.texto);
+        })
+        App.formulario.paginas[App.paginaDesenho].conteudos[App.conteudoSelecionado].resposta.desenhos[App.desenhoEditando].respostasDesenho = resposta;
+        $('#modalConteudoDesenho').modal('hide');
+
+        App.mostrarFormulario();
     }
 
     self.isValido = function () {
@@ -978,7 +988,7 @@ window.App = new Vue({
             console.log(respostas);
             this.respondente.respostas = respostas;
             //this.respondente.duracao = new Date().getTime() - this.respondente.duracao;
-            this.$http.post(urlFinalizarFormulario, { respondente: this.respondente, inicio: this.inicio, fim: new Date() }).then(response => {
+            this.$http.post(urlFinalizarFormulario, JSON.stringify({ respondente: this.respondente, inicio: this.inicio, fim: new Date() })).then(response => {
                 var result = response.body;
                 console.log(response.body);
 
@@ -999,17 +1009,28 @@ window.App = new Vue({
             desenho.overlay = null;
             this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].resposta.desenhos.push(desenho);
             this.desenhoEditando = this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].resposta.desenhos.length - 1;
-            $("#defineLocalizacao").hide();
             this.editandoDesenho = false;
+            if(this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor != 2)
+                $("#defineLocalizacao").hide();
 
-            var qtd = 0;
-            App.formulario.paginas[App.paginaAtual].conteudos.forEach(function (c) {
-                if (c.tipo == 11)
-                    qtd++;
-            })
-            if (qtd == 1)
+            // var qtd = 0;
+            // App.formulario.paginas[App.paginaAtual].conteudos.forEach(function (c) {
+            //     if (c.tipo == 11)
+            //         qtd++;
+            // })
+            if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 1)
+                $('#modalConteudoDesenho').modal('show'); 
+            else if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 3)
                 this.mostrarFormulario();
-            else
+        },
+        abrirConteudosDesenhos: function (desenho) {
+            this.paginaDesenho = this.paginaAtual;
+            console.log("abrirConteudosDesenho");
+            //this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].conteudosDesenhos.forEach(function (conteudo) {
+            //    desenho.respostasDesenho.push(new RespostaDesenho());
+            //})
+            
+            if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 2)
                 $('#modalConteudoDesenho').modal('show');
         },
         editarDesenho: function (indexPagina, indexConteudo, indexDesenho) {

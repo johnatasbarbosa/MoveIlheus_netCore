@@ -34,8 +34,8 @@ namespace MoveIlheus.Models
         //public virtual List<PaginaDesenho> PaginasDesenho { get; set; }
 
         [Column("pagina_id")]
-        public int paginaId { get; set; }
-        public virtual Pagina pagina { get; set; }
+        public int PaginaId { get; set; }
+        public virtual Pagina Pagina { get; set; }
         //public int? PaginaDesenhoId { get; set; }
         //public virtual PaginaDesenho PaginaDesenho { get; set; }
     }

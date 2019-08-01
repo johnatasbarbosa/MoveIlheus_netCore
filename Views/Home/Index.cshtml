@@ -32,7 +32,8 @@
             <div>
                 <div id="defineLocalizacao" class="form-group" style="position: absolute; top: 50%; left: 50%; display: none;">
                     <button class="btn btn-danger" v-on:click="cancelarDesenho()">Cancelar</button>
-                    <!-- <button class="btn btn-success" v-on:click="formulario.paginas[paginaAtual].definirLocalizacao()">Confirmar</button> -->
+                    <!-- <button v-if="formulario.paginas[paginaAtual].conteudos[conteudoSelecionado] && formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].valor == 2" class="btn btn-success" v-on:click="formulario.paginas[paginaAtual].definirLocalizacao()">Confirmar</button> -->
+                    <button v-if="formulario.paginas[paginaAtual].conteudos[conteudoSelecionado] && formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].valor == 2" class="btn btn-success" v-on:click="abrirConteudosDesenhos()">Confirmar</button>
                 </div>
             </div>
         </div>

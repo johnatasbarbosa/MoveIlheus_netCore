@@ -26,7 +26,7 @@ namespace MoveIlheus.Controllers
             return View(formulario);
         }
         
-        public JsonResult Teste(Formulario formulario)
+        public JsonResult Teste([FromBody] Formulario formulario)
         {
             return Json(new { success = true, message = "Uma mensagem", additionalData = new { primeiro = 1, segundo = 2 }, id = 7 });
         }
@@ -44,14 +44,14 @@ namespace MoveIlheus.Controllers
             return Json(new { success = formulario != null, data = retorno });
         }
 
-        public JsonResult SalvarFormulario(Formulario formulario)
+        public JsonResult SalvarFormulario([FromBody] Formulario formulario)
         {
             var result = servico.SalvarFormulario(formulario);
 
             return Json(result);
         }
 
-        public JsonResult SalvarPagina(Pagina pagina)
+        public JsonResult SalvarPagina([FromBody] Pagina pagina)
         {
             pagina.Restricoes = null;
             pagina.Conteudos = null;
@@ -60,14 +60,14 @@ namespace MoveIlheus.Controllers
             return Json(result);
         }
 
-        public JsonResult SalvarNovaPagina(Pagina pagina)
+        public JsonResult SalvarNovaPagina([FromBody] Pagina pagina)
         {
             var result = servico.SalvarPagina(pagina);
 
             return Json(result);
         }
 
-        public JsonResult SalvarConfiguracaoPagina(Pagina pagina)
+        public JsonResult SalvarConfiguracaoPagina([FromBody] Pagina pagina)
         {
             //if(pagina.Conteudos != null)
             //pagina.Conteudos.Clear();
@@ -78,21 +78,21 @@ namespace MoveIlheus.Controllers
             return Json(result);
         }
 
-        public JsonResult SalvarConteudo(Conteudo conteudo)
+        public JsonResult SalvarConteudo([FromBody] Conteudo conteudo)
         {
             var result = servico.SalvarConteudo(conteudo);
 
             return Json(result);
         }
 
-        public JsonResult AtualizarSequenciaConteudos(List<Conteudo> conteudos)
+        public JsonResult AtualizarSequenciaConteudos([FromBody] List<Conteudo> conteudos)
         {
             var result = servico.AtualizarSequenciaConteudos(conteudos);
 
             return Json(result);
         }
 
-        public JsonResult ExcluirPagina(Pagina pagina)
+        public JsonResult ExcluirPagina([FromBody] Pagina pagina)
         {
             //conteudo.Restricoes = null;
             var result = servico.ExcluirPagina(pagina.Id);
@@ -100,7 +100,7 @@ namespace MoveIlheus.Controllers
             return Json(result);
         }
 
-        public JsonResult ExcluirConteudo(Conteudo conteudo)
+        public JsonResult ExcluirConteudo([FromBody] Conteudo conteudo)
         {
             //conteudo.Restricoes = null;
             var result = servico.ExcluirConteudo(conteudo.Id);
@@ -123,7 +123,7 @@ namespace MoveIlheus.Controllers
         //    return Json(new { success = false, message = "Ocorreu um Erro" });
         //}
 
-        public JsonResult ExcluirConteudoDesenho(ConteudoDesenho conteudo)
+        public JsonResult ExcluirConteudoDesenho([FromBody] ConteudoDesenho conteudo)
         {
             //conteudo.Restricoes = null;
             var result = servico.ExcluirConteudoDesenho(conteudo.Id);
@@ -131,14 +131,14 @@ namespace MoveIlheus.Controllers
             return Json(result);
         }
 
-        public JsonResult SalvarConteudoDesenho(ConteudoDesenho conteudo)
+        public JsonResult SalvarConteudoDesenho([FromBody] ConteudoDesenho conteudo)
         {
             var result = servico.SalvarConteudoDesenho(conteudo);
 
             return Json(result);
         }
 
-        public JsonResult AtualizarSequenciaConteudosDesenhos(List<ConteudoDesenho> conteudos)
+        public JsonResult AtualizarSequenciaConteudosDesenhos([FromBody] List<ConteudoDesenho> conteudos)
         {
             var result = servico.AtualizarSequenciaConteudosDesenhos(conteudos);
 

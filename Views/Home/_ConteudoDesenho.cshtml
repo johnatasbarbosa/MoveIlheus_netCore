@@ -16,7 +16,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" tabindex="-1" class="btn btn-danger" v-on:click="excluirDesenho()">Excluir</button>
-                <button type="button" class="btn btn-primary" v-on:click="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].salvarRespostasDesenho()">Save changes</button>
+                <button type="button" class="btn btn-primary" v-if="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].valor != 2" v-on:click="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].salvarRespostasDesenho()">Save change</button>
+                <button type="button" class="btn btn-primary" v-if="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].valor == 2" v-on:click="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].salvarRespostasDesenhos()">Save changes</button>
             </div>
         </div>
     </div>
