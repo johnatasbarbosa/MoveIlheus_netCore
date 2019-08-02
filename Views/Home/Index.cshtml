@@ -29,12 +29,21 @@
             </div>
             @Html.Partial("_ConteudoDesenho")
             @Html.Partial("VerificarNovoDesenho")
-            <div>
-                <div id="defineLocalizacao" class="form-group" style="position: absolute; top: 50%; left: 50%; display: none;">
+
+            <div id="defineLocalizacao" class="form-group" style="position: absolute; display: none; top: 50%; left: 50%;">
+                <div v-if="formulario.paginas[paginaAtual].conteudos[conteudoSelecionado] && formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].valor != 2">
                     <button class="btn btn-danger" v-on:click="cancelarDesenho()">Cancelar</button>
-                    <!-- <button v-if="formulario.paginas[paginaAtual].conteudos[conteudoSelecionado] && formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].valor == 2" class="btn btn-success" v-on:click="formulario.paginas[paginaAtual].definirLocalizacao()">Confirmar</button> -->
-                    <button v-if="formulario.paginas[paginaAtual].conteudos[conteudoSelecionado] && formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].valor == 2" class="btn btn-success" v-on:click="abrirConteudosDesenhos()">Confirmar</button>
                 </div>
+            </div>
+            <div id="boxLocalizacao" class="form-group" style="position: absolute; display: none; top: 70%; padding: 5px; background: white; text-align: center;">
+                <div v-if="formulario.paginas[paginaAtual].conteudos[conteudoSelecionado] && formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].valor == 2">
+                    <label>{{ formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].texto }}</label>
+                    <small>Confirme ao selecionar todos os locais</small>
+                    <div style="text-align: center;">
+                        <button class="btn btn-danger" v-on:click="cancelarDesenho()">Cancelar</button>
+                        <button class="btn btn-success" v-on:click="abrirConteudosDesenhos()">Confirmar</button>
+                    </div>
+                </div>                
             </div>
         </div>
     </div>

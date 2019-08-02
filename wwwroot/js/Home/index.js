@@ -462,6 +462,7 @@ function Conteudo(conteudo) {
     }
 
     self.desenhar = function () {
+        console.log("desenhar", self.valor)
         App.esconderFormulario();
         if(self.valor == 1)
             drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
@@ -471,6 +472,31 @@ function Conteudo(conteudo) {
         else if (self.valor == 3)
             drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
             //drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+        
+        if(self.valor == 2)
+            self.avancarProximo();
+    }
+
+    self.avancarProximo = function(){
+        console.log("avancarProximo");
+        if(App.conteudoSelecionado < App.formulario.paginas[App.paginaAtual].conteudos.length - 1){
+            App.conteudoSelecionado += 1;
+            console.log(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].texto);
+
+            while(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].restricoesValidas == false && App.conteudoSelecionado < App.formulario.paginas[App.paginaAtual].conteudos.length - 1){
+                App.conteudoSelecionado += 1;
+                console.log(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].texto);
+            }
+            console.log(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].texto);
+            if(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].restricoesValidas == false){
+                App.avancarProximaPagina();
+                App.mostrarFormulario();
+            }
+        }
+        else{
+            App.avancarProximaPagina();
+            App.mostrarFormulario();
+        }
     }
 
     self.novoDesenho = function (novoDesenho) {
@@ -516,7 +542,8 @@ function Conteudo(conteudo) {
         App.formulario.paginas[App.paginaDesenho].conteudos[App.conteudoSelecionado].resposta.desenhos[App.desenhoEditando].respostasDesenho = resposta;
         $('#modalConteudoDesenho').modal('hide');
 
-        App.mostrarFormulario();
+        //App.mostrarFormulario();
+        self.avancarProximo();
     }
 
     self.isValido = function () {
@@ -603,7 +630,8 @@ var data = {
     paginaDesenho: -1,
     inicio: null,
     minPage: false,
-    tentouPassar: false
+    tentouPassar: false,
+    indexConteudoModal: -1
 };
 
 window.App = new Vue({ 
@@ -776,7 +804,7 @@ window.App = new Vue({
         verificarConteudos: function () {
             console.log("Verificando conteudos");
             var self = this;
-            this.formulario.paginas[this.paginaAtual].conteudos.forEach(function (conteudo) {
+            this.formulario.paginas[this.paginaAtual].conteudos.forEach(function (conteudo, index) {
                 var restricoesValidas = true;
                 conteudo.restricoes.forEach(function (restricao) {
                     if (restricao.paginaIndex == -1) {
@@ -792,9 +820,23 @@ window.App = new Vue({
                     }
                     console.log(self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].resposta.opcaoId);
                     console.log(restricao.opcaoAlvoId);
+                    console.log(conteudo.id, self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].tipo);
                     if (restricoesValidas) {
                         if (self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].tipo == TipoConteudo.CaixaSelecao) {
-                            restricoesValidas = self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].resposta.opcoesView.includes(restricao.opcaoAlvoId);
+                            //super armengue
+                            if(conteudo.tipo == TipoConteudo.FerramentaDesenho && conteudo.valor == 2 && index == 1){
+                                restricoesValidas = self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].resposta.opcoesView.length > 0;
+                            }
+                            else if(conteudo.tipo == TipoConteudo.Escala)
+                                restricoesValidas = self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].resposta.opcoesView.length > 0;
+                            else
+                                restricoesValidas = self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].resposta.opcoesView.includes(restricao.opcaoAlvoId);
+                        }
+                        else if (self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].tipo == TipoConteudo.FerramentaDesenho) {
+                            if(conteudo.id == self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].id)
+                                restricoesValidas = conteudo.resposta.desenhos.length == 0;
+                            else
+                                restricoesValidas = (self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].resposta.desenhos.length > 0) || (self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].restricoesValidas == false);
                         }
                         else
                             restricoesValidas = self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].resposta.opcaoId == restricao.opcaoAlvoId;
@@ -1010,14 +1052,24 @@ window.App = new Vue({
             this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].resposta.desenhos.push(desenho);
             this.desenhoEditando = this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].resposta.desenhos.length - 1;
             this.editandoDesenho = false;
-            if(this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor != 2)
+            if(this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor != 2){
                 $("#defineLocalizacao").hide();
+                $("#boxLocalizacao").hide();
+            }
 
             // var qtd = 0;
             // App.formulario.paginas[App.paginaAtual].conteudos.forEach(function (c) {
             //     if (c.tipo == 11)
             //         qtd++;
             // })
+
+            //super armengue
+            if(this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 2){
+                App.indexConteudoModal = 1;
+            }
+            else
+                App.indexConteudoModal = App.conteudoSelecionado;
+
             if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 1)
                 $('#modalConteudoDesenho').modal('show'); 
             else if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 3)
@@ -1053,12 +1105,14 @@ window.App = new Vue({
             $('#modalConteudoDesenho').modal('show');
         },
         esconderFormulario: function () {
+            console.log("esconderFormulario");
             //var elementos = document.getElementById("formulario")
             //elementos.hidden = true;
             $("#formulario").hide();
             //$(".modal-backdrop").hide();
             //$("#map").show();
             this.exibirDefineLocalizacao();
+            $("#pac-input").show();
             //var mapaElemento = document.getElementById("map")
             //mapaElemento.hidden = false;
             //if (this.formulario.paginas[this.paginaAtual].zoomLevel != 0) {
@@ -1069,13 +1123,18 @@ window.App = new Vue({
             //}
         },
         exibirDefineLocalizacao: function () {
+            console.log("exibirDefineLocalizacao");
             $("#defineLocalizacao").show();
+            if(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor == 2)
+                $("#boxLocalizacao").show();
         },
         mostrarFormulario: function () {
             console.log("mostrarFormulario");
             drawingManager.setDrawingMode(null);
             $("#defineLocalizacao").hide();
+            $("#boxLocalizacao").hide();
             $("#formulario").show();
+            $("#pac-input").hide();
             //$(".modal-backdrop").show();
             //$("#map").hide();
         },

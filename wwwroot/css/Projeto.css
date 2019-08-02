@@ -1,4 +1,5 @@
-﻿@media only screen and (min-width: 750px) {
+﻿/* computador */
+@media only screen and (min-width: 750px) {
     .page {
         max-height: 550px;
         top: 10%;
@@ -16,7 +17,12 @@
     .paginaGrande {
         width: 600px;
     }
+    #boxLocalizacao{
+        width: 25%;
+        left: 37%;
+    }
 }
+/* celular */
 @media only screen and (max-width: 749px) {
     .page {
         height: 100%;
@@ -34,6 +40,10 @@
     }
     .slider {
         width: 100%;
+    }
+    #boxLocalizacao{
+        width: 50%;
+        left: 25%;
     }
 }
 

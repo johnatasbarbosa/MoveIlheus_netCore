@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body" style="padding-top: unset;">
-                <div v-for="(conteudo, index) in formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].conteudosDesenhos">
+                <div v-for="(conteudo, index) in formulario.paginas[paginaDesenho].conteudos[indexConteudoModal].conteudosDesenhos">
                     <p>
                         @Html.Partial("_ConteudosDesenho")
                     </p>

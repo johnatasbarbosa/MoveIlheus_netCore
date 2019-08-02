@@ -182,11 +182,14 @@ namespace MoveIlheus.Services
                         if (restricaoNovo == null)
                         {
                             contexto.ContentRestrictions.Remove(conteudoDB.Restricoes[i]);
-                            i--;
+                            //i--;
                         }
                         else
                         {
                             conteudoDB.Restricoes[i].Nome = restricaoNovo.Nome;
+                            conteudoDB.Restricoes[i].PaginaAlvoId = restricaoNovo.PaginaAlvoId;
+                            conteudoDB.Restricoes[i].ConteudoAlvoId = restricaoNovo.ConteudoAlvoId;
+                            conteudoDB.Restricoes[i].OpcaoAlvoId = restricaoNovo.OpcaoAlvoId;
                             contexto.Entry(conteudoDB.Restricoes[i]).State = EntityState.Modified;
                         }
                     }

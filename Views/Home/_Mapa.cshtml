@@ -35,9 +35,25 @@
         background-color: rgba(0,0,0,0.5);
         /* padding-left: 10px; */
     }
+
+    #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
 </style>
 
 <div id="tooltipEsporte">
     <span style="color: #fff;">Futebol</span>
 </div>
+<input id="pac-input" class="controls" type="text" placeholder="Search Box" style="display: none;">
 <div id="map"></div>

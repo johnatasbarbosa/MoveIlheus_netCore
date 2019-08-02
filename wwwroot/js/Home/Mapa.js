@@ -16,7 +16,7 @@ function initMap() {
         mapTypeControl: true,
         mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-            position: google.maps.ControlPosition.TOP_CENTER
+            position: google.maps.ControlPosition.RIGHT_TOP
         },
         //zoomControl: boolean,
         //mapTypeControl: boolean,
@@ -31,7 +31,7 @@ function initMap() {
     
     var input = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
-    //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
     
     drawingManager = new google.maps.drawing.DrawingManager({
         //drawingMode: google.maps.drawing.OverlayType.MARKER,

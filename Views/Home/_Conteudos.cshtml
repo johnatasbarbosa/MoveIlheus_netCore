@@ -200,7 +200,7 @@
             <h4>{{ conteudo.texto }}</h4>
         </div>
     </div>
-    <div v-if="conteudo.tipo == 11">
+    <div v-if="conteudo.tipo == 11 && (conteudo.valor != 2 || index == 1)">
         <div v-if="index == conteudoEditando">
             <button class="btn btn-default" style="width: 75%; min-height: 60px;">
                 <div style="width: 80%; float: left;">
@@ -226,10 +226,12 @@
                             <img src="~/Images/icon_marker.png" style="width: 30px;" />
                         </span>
                         <span v-if="conteudo.valor == 2">
-                            <img src="~/Images/icon_line.png" style="width: 30px;" />
+                            <img src="~/Images/icon_marker.png" style="width: 30px;" />
+                            <!-- <img src="~/Images/icon_line.png" style="width: 30px;" /> -->
                         </span>
                         <span v-if="conteudo.valor == 3">
-                            <img src="~/Images/icon_polygon.png" style="width: 30px;" />
+                            <img src="~/Images/icon_marker.png" style="width: 30px;" />
+                            <!-- <img src="~/Images/icon_polygon.png" style="width: 30px;" /> -->
                         </span>
                     </div>
                 </button>
