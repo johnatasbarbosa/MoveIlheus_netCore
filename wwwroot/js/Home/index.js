@@ -63,7 +63,8 @@ var TipoConteudo = {
     Grafico: 12,
     RespostaNumerica: 13,
     CaixaConfirmacao: 14,
-    RespostaPesquisa: 15
+    RespostaPesquisa: 15,
+    Botao: 16
 }
 
 var TipoDesenho = {
@@ -507,7 +508,21 @@ function Conteudo(conteudo) {
         }
         else {
             $('#modalVerificarNovoDesenho').modal('hide');
+            console.log("Escolheu não");
             App.mostrarFormulario();
+            if(self.valor == 1){
+                console.log("verificando");
+                var flag = true;
+                App.formulario.paginas[App.paginaDesenho].conteudos.forEach(function(conteudo){
+                    conteudo.restricoes.forEach(function(restricao){
+                        if(restricao.conteudoAlvoId == self.id && conteudo.id != self.id)
+                            flag = false;
+                    })
+                })
+                if(flag){
+                    App.avancarProximaPagina();
+                }
+            }
         }
     }
     self.salvarRespostasDesenho = function () {
@@ -539,6 +554,7 @@ function Conteudo(conteudo) {
             conteudo.resposta = new RespostaDesenho({ ConteudoDesenhoId: conteudo.id });
             console.log(conteudo.resposta.texto);
         })
+
         App.formulario.paginas[App.paginaDesenho].conteudos[App.conteudoSelecionado].resposta.desenhos[App.desenhoEditando].respostasDesenho = resposta;
         $('#modalConteudoDesenho').modal('hide');
 
@@ -838,6 +854,9 @@ window.App = new Vue({
                             else
                                 restricoesValidas = (self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].resposta.desenhos.length > 0) || (self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].restricoesValidas == false);
                         }
+                        else if(self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].tipo == TipoConteudo.CaixaConfirmacao){
+                            restricoesValidas = self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].resposta.marcado;
+                        }
                         else
                             restricoesValidas = self.formulario.paginas[restricao.paginaIndex].conteudos[restricao.conteudoIndex].resposta.opcaoId == restricao.opcaoAlvoId;
                     }
@@ -1072,8 +1091,11 @@ window.App = new Vue({
 
             if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 1)
                 $('#modalConteudoDesenho').modal('show'); 
-            else if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 3)
+            else if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 3){
                 this.mostrarFormulario();
+                this.avancarProximaPagina();
+                overlays[overlays.length - 1].setOptions({draggable: true, clickable: false});
+            }
         },
         abrirConteudosDesenhos: function (desenho) {
             this.paginaDesenho = this.paginaAtual;
@@ -1081,9 +1103,15 @@ window.App = new Vue({
             //this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].conteudosDesenhos.forEach(function (conteudo) {
             //    desenho.respostasDesenho.push(new RespostaDesenho());
             //})
-            
-            if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 2)
+                        
+            if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 2){
+                //super armengue
+                App.formulario.paginas[App.paginaAtual].conteudos[App.indexConteudoModal].conteudosDesenhos.forEach(function(c){
+                    var id = App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].id;
+                    c.resposta = new RespostaDesenho({ ConteudoDesenhoId: id });
+                })
                 $('#modalConteudoDesenho').modal('show');
+            }
         },
         editarDesenho: function (indexPagina, indexConteudo, indexDesenho) {
             this.paginaDesenho = indexPagina;

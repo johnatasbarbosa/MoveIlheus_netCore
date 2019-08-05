@@ -217,7 +217,7 @@
         </div>
         <div v-if="index != conteudoEditando">
             <div style="text-align: center;">
-                <button class="btn btn-default" style="width: 75%; min-height: 60px;" v-on:click="conteudoSelecionado = index; conteudo.desenhar()">
+                <button class="btn btn-default" style="width: 75%; min-height: 60px;" v-on:click="conteudoSelecionado = index; indexConteudoModal = index; conteudo.desenhar()">
                     <div style="width: 80%; float: left;">
                         <h6>{{ conteudo.texto }}</h6>
                     </div>
@@ -236,6 +236,14 @@
                     </div>
                 </button>
             </div>
+        </div>
+    </div>
+    <div v-if="conteudo.tipo == 16">
+        <h5>
+            <input v-if="index == conteudoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+        </h5>
+        <div v-if="index != conteudoEditando">
+            <button class="btn btn-primary">{{ conteudo.texto }}</button>
         </div>
     </div>
 </div>

@@ -226,4 +226,12 @@
             <input type="text" class="form-control">
         </div>
     </div>
+    <div v-if="conteudo.tipo == 16">
+        <h5>
+            <input v-if="index == conteudoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+        </h5>
+        <div v-if="index != conteudoEditando">
+            <button class="btn btn-primary">{{ conteudo.texto }}</button>
+        </div>
+    </div>
 </div>

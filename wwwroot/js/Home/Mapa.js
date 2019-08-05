@@ -145,6 +145,7 @@ function initMap() {
         App.formulario.paginas.forEach(function (pagina, indexPagina) {
             pagina.conteudos.forEach(function (conteudo, indexConteudo) {
                 if (conteudo.tipo == 11) {
+                    if(conteudo.valor == 2 || conteudo.valor == 3) return;
                     conteudo.resposta.desenhos.forEach(function (desenho, indexDesenho) {
                         if (desenho.indexOverlay == num) {
                             console.log(indexPagina, indexConteudo, indexDesenho);

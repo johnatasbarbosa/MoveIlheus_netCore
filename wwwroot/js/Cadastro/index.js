@@ -34,7 +34,8 @@ var TipoConteudo  = {
     Grafico: 12,
     RespostaNumerica: 13,
     CaixaConfirmacao: 14,
-    RespostaPesquisa: 15
+    RespostaPesquisa: 15,
+    Botao: 16
 }
 
 var TipoDesenho = {
@@ -634,7 +635,8 @@ var data = {
         //{ value: 12, text: 'Gráfico' },
         { value: 13, text: 'Resposta Numérica' },
         { value: 14, text: 'Caixa de Confirmação' },
-        { value: 15, text: 'Resposta com Pesquisa' }
+        { value: 15, text: 'Resposta com Pesquisa' },
+        { value: 16, text: 'Botão' }
     ],
     optionsDesenhos: [
         { value: 1, text: 'Múltipla Escolha' },
