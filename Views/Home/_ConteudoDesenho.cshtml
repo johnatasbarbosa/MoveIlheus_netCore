@@ -15,9 +15,10 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" tabindex="-1" class="btn btn-danger" v-on:click="excluirDesenho()">Excluir</button>
-                <button type="button" class="btn btn-primary" v-if="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].valor != 2" v-on:click="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].salvarRespostasDesenho()">Save change</button>
-                <button type="button" class="btn btn-primary" v-if="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].valor == 2" v-on:click="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].salvarRespostasDesenhos()">Save changes</button>
+                <button type="button" tabindex="-1" class="btn btn-default" v-if="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].valor == 2" v-on:click="$('#modalConteudoDesenho').modal('hide')">Voltar</button>
+                <button type="button" tabindex="-1" class="btn btn-danger" v-if="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].valor != 2" v-on:click="excluirDesenho()">Excluir</button>
+                <button type="button" class="btn btn-primary" v-if="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].valor != 2" v-on:click="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].salvarRespostasDesenho()">Salvar</button>
+                <button type="button" class="btn btn-primary" v-if="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].valor == 2" v-on:click="formulario.paginas[paginaDesenho].conteudos[conteudoSelecionado].salvarRespostasDesenhos()">Salvar</button>
             </div>
         </div>
     </div>

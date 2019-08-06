@@ -159,7 +159,7 @@ namespace MoveIlheus.Services
                         if (opcaoNovo == null)
                         {
                             contexto.Options.Remove(conteudoDB.Opcoes[i]);
-                            i--;
+                            //i--;
                         }
                         else
                         {
@@ -372,7 +372,7 @@ namespace MoveIlheus.Services
                         if (opcaoNovo == null)
                         {
                             contexto.Options.Remove(conteudoDB.Opcoes[i]);
-                            i--;
+                            //i--;
                         }
                         else
                         {

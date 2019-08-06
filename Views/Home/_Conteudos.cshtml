@@ -243,7 +243,7 @@
             <input v-if="index == conteudoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
         </h5>
         <div v-if="index != conteudoEditando">
-            <button class="btn btn-primary">{{ conteudo.texto }}</button>
+            <a href="~/TCLE.pdf" download>{{ conteudo.texto }}</a>
         </div>
     </div>
 </div>

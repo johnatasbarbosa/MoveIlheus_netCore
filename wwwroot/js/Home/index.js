@@ -498,6 +498,7 @@ function Conteudo(conteudo) {
             App.avancarProximaPagina();
             App.mostrarFormulario();
         }
+        App.indexOverlayPodeExcluir = overlaysLength();
     }
 
     self.novoDesenho = function (novoDesenho) {
@@ -647,7 +648,9 @@ var data = {
     inicio: null,
     minPage: false,
     tentouPassar: false,
-    indexConteudoModal: -1
+    indexConteudoModal: -1,
+    selecionandoDesenhoExcluir: false,
+    indexOverlayPodeExcluir: -1
 };
 
 window.App = new Vue({ 
@@ -1180,6 +1183,15 @@ window.App = new Vue({
             this.desenhoEditando = -1;
             $('#modalConteudoDesenho').modal('hide');
             App.mostrarFormulario();
+        },
+        selecionarDesenhoExcluir: function(){
+            this.selecionandoDesenhoExcluir = true;
+            selecionarDesenhoExcluir();
+        },
+        cancelarSelecionarDesenhoExcluir: function(){
+            this.selecionandoDesenhoExcluir = false;
+            drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
+            //selecionarDesenhoExcluir();
         },
         minimizarPagina: function () {
             console.log("minimizarPagina");

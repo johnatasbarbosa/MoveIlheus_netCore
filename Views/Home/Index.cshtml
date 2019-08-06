@@ -18,10 +18,6 @@
                     <div class="pageBody" id="pageBody">
                         @Html.Partial("_PageBody")
                     </div>
-<!-- 
-                    <a href="/favicon.ico" download>
-                        Teste
-                    </a> -->
 
                     <br />
                     <div class="pageFooter text-center" style="vertical-align: text-bottom;" v-if="formulario.paginas.length - 1 != paginaAtual">
@@ -41,13 +37,20 @@
             </div>
             <div id="boxLocalizacao" class="form-group" style="position: absolute; display: none; top: 70%; padding: 5px; background: white; text-align: center;">
                 <div v-if="formulario.paginas[paginaAtual].conteudos[conteudoSelecionado] && formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].valor == 2">
-                    <label>{{ formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].texto }}</label>
-                    <small>Confirme ao selecionar todos os locais</small>
-                    <div style="text-align: center;">
-                        <button class="btn btn-danger" v-on:click="cancelarDesenho()">Cancelar</button>
-                        <button class="btn btn-success" v-on:click="abrirConteudosDesenhos()">Confirmar</button>
+                    <div v-if="selecionandoDesenhoExcluir == false">
+                        <h5>{{ formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].texto }}</label>
+                        <small>Confirme ao selecionar todos os locais</small>
+                        <div style="text-align: center;">
+                            <!-- <button class="btn btn-danger" v-on:click="cancelarDesenho()">Cancelar</button> -->
+                            <button class="btn btn-danger" v-on:click="selecionarDesenhoExcluir()"><span class="fa fa-trash"></span></button>
+                            <button class="btn btn-success" v-on:click="abrirConteudosDesenhos()">Confirmar</button>
+                        </div>
                     </div>
-                </div>                
+                    <div v-if="selecionandoDesenhoExcluir == true">
+                        <label>Clique na marca que deseja excluir</label>
+                        <button class="btn btn-default" v-on:click="cancelarSelecionarDesenhoExcluir()">Voltar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

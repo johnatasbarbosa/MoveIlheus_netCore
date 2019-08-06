@@ -142,19 +142,26 @@ function initMap() {
 
     function selecionar(num) {
         console.log("clicou " + num);
-        App.formulario.paginas.forEach(function (pagina, indexPagina) {
-            pagina.conteudos.forEach(function (conteudo, indexConteudo) {
-                if (conteudo.tipo == 11) {
-                    if(conteudo.valor == 2 || conteudo.valor == 3) return;
-                    conteudo.resposta.desenhos.forEach(function (desenho, indexDesenho) {
-                        if (desenho.indexOverlay == num) {
-                            console.log(indexPagina, indexConteudo, indexDesenho);
-                            App.editarDesenho(indexPagina, indexConteudo, indexDesenho);
-                        }
-                    })
-                }
+
+        if(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor == 2){
+            if(App.selecionandoDesenhoExcluir && num > App.indexOverlayPodeExcluir){
+                overlays[num - 1].setMap(null);
+            }
+        }
+        else
+            App.formulario.paginas.forEach(function (pagina, indexPagina) {
+                pagina.conteudos.forEach(function (conteudo, indexConteudo) {
+                    if (conteudo.tipo == 11) {
+                        if(conteudo.valor == 2 || conteudo.valor == 3) return;
+                        conteudo.resposta.desenhos.forEach(function (desenho, indexDesenho) {
+                            if (desenho.indexOverlay == num) {
+                                console.log(indexPagina, indexConteudo, indexDesenho);
+                                App.editarDesenho(indexPagina, indexConteudo, indexDesenho);
+                            }
+                        })
+                    }
+                })
             })
-        })
     }
 
     function tooltipMouse(e){
@@ -203,6 +210,17 @@ function initMap() {
             console.log(num);
         });
         //event.overlay.addListener('click', selecionar);
+        var valor = App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor;
+        event.overlay.addListener('mouseover', function(){
+            if(App.selecionandoDesenhoExcluir && valor == 2 && num > App.indexOverlayPodeExcluir)
+                this.setCursor('not-allowed');
+            console.log('mouseover');
+        });
+        event.overlay.addListener('mouseout', function(){
+            this.setCursor('grap');
+            console.log('mouseout');
+        });
+
         event.overlay.addListener('mousemove', tooltipMouse);
         event.overlay.addListener('mouseout', mousesaiu);
         //event.overlay.addListener('drag', function () {
@@ -291,3 +309,12 @@ function initMap() {
 //    e.preventDefault();   // does nothing since the listener is passive
 //    console.log(e.defaultPrevented);  // still false
 //}, Modernizr.passiveeventlisteners ? { passive: true } : false);
+
+function selecionarDesenhoExcluir(){
+    drawingManager.setDrawingMode(null);
+    // map.setOptions({draggableCursor:'not-allowed'});
+}
+
+function overlaysLength(){
+    return overlays.length;
+}
