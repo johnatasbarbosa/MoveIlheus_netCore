@@ -35,7 +35,8 @@ var TipoConteudo  = {
     RespostaNumerica: 13,
     CaixaConfirmacao: 14,
     RespostaPesquisa: 15,
-    Botao: 16
+    Botao: 16,
+    Data: 17
 }
 
 var TipoDesenho = {
@@ -78,10 +79,16 @@ function ConteudoDesenho(conteudoDesenho) {
     self.resposta = [];
 
     if (conteudoDesenho) {
-        if (conteudoDesenho.Opcoes)
+        if (conteudoDesenho.Opcoes){
+            conteudoDesenho.Opcoes.sort(function(a, b){
+                if(a.Id < b.Id) return -1;
+                if(a.Id > b.Id) return 1;
+                return 0;
+            });
             conteudoDesenho.Opcoes.forEach(function (opcao) {
                 self.opcoes.push(new Opcao(opcao));
             })
+        }
 
         if (conteudoDesenho.Tipo == TipoConteudo.MultiplasRespostas) {
             for (var i = 0; i < conteudo.Valor; i++) {
@@ -466,10 +473,16 @@ function Conteudo(conteudo) {
     self.respostas = [];
     self.conteudosDesenhos = [];
     if (conteudo) {
-        if (conteudo.Opcoes)
+        if (conteudo.Opcoes){
+            conteudo.Opcoes.sort(function(a, b){
+                if(a.Id < b.Id) return -1;
+                if(a.Id > b.Id) return 1;
+                return 0;
+            });
             conteudo.Opcoes.forEach(function (opcao) {
                 self.opcoes.push(new Opcao(opcao));
             })
+        }
         if (conteudo.Restricoes.length)
             conteudo.Restricoes.forEach(function (restricao) {
                 self.restricoes.push(new RestricaoConteudo(restricao));
@@ -636,7 +649,8 @@ var data = {
         { value: 13, text: 'Resposta Numérica' },
         { value: 14, text: 'Caixa de Confirmação' },
         { value: 15, text: 'Resposta com Pesquisa' },
-        { value: 16, text: 'Botão' }
+        { value: 16, text: 'Botão' },
+        { value: 17, text: 'Data' }
     ],
     optionsDesenhos: [
         { value: 1, text: 'Múltipla Escolha' },

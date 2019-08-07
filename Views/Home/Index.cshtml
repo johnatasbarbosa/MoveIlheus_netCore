@@ -39,7 +39,9 @@
                 <div v-if="formulario.paginas[paginaAtual].conteudos[conteudoSelecionado] && formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].valor == 2">
                     <div v-if="selecionandoDesenhoExcluir == false">
                         <h5>{{ formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].texto }}</label>
-                        <small>Confirme ao selecionar todos os locais</small>
+                        <p>
+                            <small>Confirme ao selecionar todos os locais</small>
+                        </p>
                         <div style="text-align: center;">
                             <!-- <button class="btn btn-danger" v-on:click="cancelarDesenho()">Cancelar</button> -->
                             <button class="btn btn-danger" v-on:click="selecionarDesenhoExcluir()"><span class="fa fa-trash"></span></button>
@@ -75,6 +77,7 @@
         }
         var formularioModel = @Html.Raw(JsonConvert.SerializeObject(Model, Formatting.None, jsSettings));
         console.log(formularioModel);
+        console.log(JSON.stringify(formularioModel));
     </script>
     <script src="~/js/Home/index.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA881HMoL7z4WG8xPJvXNgTeywhEwxA7JQ&libraries=places,drawing&callback=initMap"
@@ -86,6 +89,10 @@
             $('[data-toggle="popover"]').popover();
             //document.getElementById("map").style.display = "block";
         });
+        $(function () {
+            //$('#datetimepicker5').datetimepicker();
+        });
+        //$('#datetimepicker1').datetimepicker();
     </script>
 }
 

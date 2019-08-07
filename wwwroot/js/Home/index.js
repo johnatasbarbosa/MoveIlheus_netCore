@@ -64,7 +64,8 @@ var TipoConteudo = {
     RespostaNumerica: 13,
     CaixaConfirmacao: 14,
     RespostaPesquisa: 15,
-    Botao: 16
+    Botao: 16,
+    Data: 17
 }
 
 var TipoDesenho = {
@@ -142,10 +143,16 @@ function ConteudoDesenho(conteudoDesenho) {
     self.respostas = [];
 
     if (conteudoDesenho) {
-        if (conteudoDesenho.Opcoes)
+        if (conteudoDesenho.Opcoes){
+            conteudoDesenho.Opcoes.sort(function(a, b){
+                if(a.Id < b.Id) return -1;
+                if(a.Id > b.Id) return 1;
+                return 0;
+            });
             conteudoDesenho.Opcoes.forEach(function (opcao) {
                 self.opcoes.push(new Opcao(opcao));
             })
+        }
 
         if (conteudoDesenho.Tipo == TipoConteudo.MultiplasRespostas) {
             for (var i = 0; i < conteudo.Valor; i++) {
@@ -401,10 +408,16 @@ function Conteudo(conteudo) {
     self.respostas = [];
     self.conteudosDesenhos = [];
     if (conteudo) {
-        if (conteudo.Opcoes)
+        if (conteudo.Opcoes){
+            conteudo.Opcoes.sort(function(a, b){
+                if(a.Id < b.Id) return -1;
+                if(a.Id > b.Id) return 1;
+                return 0;
+            });
             conteudo.Opcoes.forEach(function (opcao) {
                 self.opcoes.push(new Opcao(opcao));
             })
+        }
         if (conteudo.Restricoes.length)
             conteudo.Restricoes.forEach(function (restricao) {
                 self.restricoes.push(new RestricaoConteudo(restricao));
@@ -583,6 +596,8 @@ function Conteudo(conteudo) {
                     return self.resposta.texto != "";
                 case TipoConteudo.FerramentaDesenho:
                     return self.resposta.desenhos.length > 0;
+                case TipoConteudo.Data:
+                    return self.resposta.texto != "";
             }
         }
         else
