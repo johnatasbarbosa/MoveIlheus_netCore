@@ -363,6 +363,7 @@ namespace MoveIlheus.Services
                     var conteudoDB = contexto.DrawingsContents.Include(x => x.Opcoes).FirstOrDefault(x => x.Id == conteudo.Id);
                     conteudoDB.Texto = conteudo.Texto;
                     conteudoDB.Valor = conteudo.Valor;
+                    conteudoDB.Obrigatorio = conteudo.Obrigatorio;
 
                     if (conteudo.Opcoes == null)
                         conteudo.Opcoes = new List<Opcao>();

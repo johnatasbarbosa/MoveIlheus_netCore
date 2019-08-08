@@ -1,92 +1,135 @@
-﻿<div class="questionBody col-sm-12" style="z-index: 0;">
-    <div v-if="conteudo.tipo == 1">
-        <h5>
-            <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
-            <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
-        </h5>
-        <ul v-if="index == conteudoDesenhoEditando">
-            <li v-for="(opcao, indexQ) in conteudo.opcoes">
-                <input type="text" v-model="opcao.texto">
-                <span class="fa fa-times btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].removerOpcao(indexQ)"></span>
-            </li>
-            <content>
-                <span class="fa fa-plus-circle btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].adicionarOpcao"></span>
-            </content>
-        </ul>
-        <div v-if="index != conteudoDesenhoEditando" v-for="(opcao, indexQ) in conteudo.opcoes">
-            <input type="radio" :name="conteudo.id" :value="opcao.id" v-model="conteudo.resposta.opcaoId">
-            <span>{{ opcao.texto }}</span>
+﻿<div class="questionBody col-sm-12 form-group" style="z-index: 0;">
+    <div v-bind:class="{ 'form-group has-error': conteudo.resposta.opcaoId == null && tentouPassarDesenho && conteudo.obrigatorio }">
+        <div v-if="conteudo.tipo == 1">
+            <h5>
+                <label v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</label>
+                <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+            </h5>
+            <ul v-if="index == conteudoDesenhoEditando">
+                <li v-for="(opcao, indexQ) in conteudo.opcoes">
+                    <input type="text" v-model="opcao.texto">
+                    <span class="fa fa-times btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].removerOpcao(indexQ)"></span>
+                </li>
+                <content>
+                    <span class="fa fa-plus-circle btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].adicionarOpcao"></span>
+                </content>
+            </ul>
+            <div v-if="index != conteudoDesenhoEditando" v-for="(opcao, indexQ) in conteudo.opcoes">
+                <!-- <input type="radio" :name="conteudo.id" :value="opcao.id" v-model="conteudo.resposta.opcaoId">
+                <span>{{ opcao.texto }}</span> -->
+                <input type="radio" :name="conteudo.id" :id="'idD'+ conteudo.id + opcao.id" :value="opcao.id" v-model="conteudo.resposta.opcaoId" class="form-check-inline">
+                <label class="form-check-label" :for="'idD'+ conteudo.id + opcao.id">{{ opcao.texto }}</label>
+            </div>
+        </div>
+        <div v-if="conteudo.tipo == 3">
+            <h5>
+                <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
+                <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+            </h5>
+            <ul v-if="index == conteudoDesenhoEditando">
+                <li v-for="(opcao, indexQ) in conteudo.opcoes">
+                    <input type="text" v-model="opcao.texto">
+                    <span class="fa fa-times btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].removerOpcao(indexQ)"></span>
+                </li>
+                <content>
+                    <span class="fa fa-plus-circle btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].adicionarOpcao"></span>
+                </content>
+            </ul>
+            <select v-if="index != conteudoDesenhoEditando" class="form-control" style="max-width: none;" v-model="conteudo.resposta.opcaoId">
+                <option value="null" disabled selected>Selecione...</option>
+                <option v-for="opcao in conteudo.opcoes" :value="opcao.id">{{ opcao.texto }}</option>
+            </select>
         </div>
     </div>
-    <div v-if="conteudo.tipo == 2">
-        <h5>
-            <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
-            <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
-        </h5>
-        <ul v-if="index == conteudoDesenhoEditando">
-            <li v-for="(opcao, indexQ) in conteudo.opcoes">
-                <input type="text" v-model="opcao.texto">
-                <span class="fa fa-times btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].removerOpcao(indexQ)"></span>
-            </li>
-            <content>
-                <span class="fa fa-plus-circle btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].adicionarOpcao"></span>
-            </content>
-        </ul>
-        <div v-if="index != conteudoDesenhoEditando" v-for="(opcao, indexQ) in conteudo.opcoes">
-            <input type="checkbox" :name="'opcoesCD' + conteudo.id" :value="opcao.id" v-model="conteudo.resposta.opcoesView">
-            <span>{{ opcao.texto }}</span>
+    
+    <div v-bind:class="{ 'form-group has-error': conteudo.resposta.opcoesView.length == 0 && tentouPassarDesenho && conteudo.obrigatorio }">
+        <div v-if="conteudo.tipo == 2">
+            <h5>
+                <label v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</label>
+                <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+            </h5>
+            <ul v-if="index == conteudoDesenhoEditando">
+                <li v-for="(opcao, indexQ) in conteudo.opcoes">
+                    <input type="text" v-model="opcao.texto">
+                    <span class="fa fa-times btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].removerOpcao(indexQ)"></span>
+                </li>
+                <content>
+                    <span class="fa fa-plus-circle btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].adicionarOpcao"></span>
+                </content>
+            </ul>
+            <div v-if="index != conteudoDesenhoEditando" v-for="(opcao, indexQ) in conteudo.opcoes">
+                <!-- <input type="checkbox" :name="'opcoesCD' + conteudo.id" :value="opcao.id" v-model="conteudo.resposta.opcoesView"> -->
+                <!-- <span>{{ opcao.texto }}</span> -->
+                <input type="checkbox" :name="'opcoesCD'" :id="'opcoesCD'+ conteudo.id + opcao.id" :value="opcao.id" v-model="conteudo.resposta.opcoesView" class="form-check-inline">
+                <label class="form-check-label" :for="'opcoesCD'+ conteudo.id + opcao.id">{{ opcao.texto }}</label>
+            </div>
         </div>
-    </div>
-    <div v-if="conteudo.tipo == 3">
-        <h5>
-            <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
-            <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
-        </h5>
-        <ul v-if="index == conteudoDesenhoEditando">
-            <li v-for="(opcao, indexQ) in conteudo.opcoes">
-                <input type="text" v-model="opcao.texto">
-                <span class="fa fa-times btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].removerOpcao(indexQ)"></span>
-            </li>
-            <content>
-                <span class="fa fa-plus-circle btnEdit" v-on:click="formulario.paginas[paginaAtual].conteudos[index].adicionarOpcao"></span>
-            </content>
-        </ul>
-        <select v-if="index != conteudoDesenhoEditando" class="form-control" style="max-width: none;" v-model="conteudo.resposta.opcaoId">
-            <option value="null" disabled selected>Selecione...</option>
-            <option v-for="opcao in conteudo.opcoes" :value="opcao.id">{{ opcao.texto }}</option>
-        </select>
-    </div>
-    <div v-if="conteudo.tipo == 4">
-        <h5>
-            <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
-            <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
-        </h5>
-        <div v-if="index == conteudoDesenhoEditando" class="form-inline">
-            <input v-model="conteudo.opcoes[0].texto" size="10" class="form-control" />
-            <input type="range" v-model.number="conteudo.valor" min="1" max="100" class="slider" id="myRange">
-            <input v-model="conteudo.opcoes[1].texto" size="10" class="form-control" />
-        </div>
-        <div v-if="index != conteudoDesenhoEditando" style="text-align: center;">
-            <span>{{ conteudo.opcoes[0].texto}}</span>
-            <input type="range" v-model.number="conteudo.resposta.valor" min="1" max="100" class="slider" id="myRange">
-            <span>{{ conteudo.opcoes[1].texto}}</span>
-        </div>
-    </div>
-    <div v-if="conteudo.tipo == 5">
-        <h5>
-            <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
-            <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
-        </h5>
-        <div v-if="index == conteudoDesenhoEditando" class="form-inline">
-            <input v-model="conteudo.valor" type="number" min="1" class="form-control" />
-        </div>
-        <div v-if="index != conteudoDesenhoEditando">
-            <div v-for="(opcao, index) in conteudo.opcoes" class="form-inline">
-                <span>{{ index + 1 }} - &nbsp;</span>
-                <input class="form-control" v-model.lazy="opcao.texto" />
+        <div v-if="conteudo.tipo == 5">
+            <h5>
+                <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
+                <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+            </h5>
+            <div v-if="index == conteudoDesenhoEditando" class="form-inline">
+                <input v-model="conteudo.valor" type="number" min="1" class="form-control" />
+            </div>
+            <div v-if="index != conteudoDesenhoEditando">
+                <div v-for="(opcao, index) in conteudo.opcoes" class="form-inline">
+                    <span>{{ index + 1 }} - &nbsp;</span>
+                    <input class="form-control" v-model.lazy="opcao.texto" />
+                </div>
             </div>
         </div>
     </div>
+    
+    <div v-bind:class="{ 'form-group has-error': conteudo.resposta.valor == null && tentouPassarDesenho && conteudo.obrigatorio }">
+        <div v-if="conteudo.tipo == 4">
+            <h5>
+                <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
+                <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+            </h5>
+            <div v-if="index == conteudoDesenhoEditando" class="form-inline">
+                <input v-model="conteudo.opcoes[0].texto" size="10" class="form-control" />
+                <input type="range" v-model.number="conteudo.valor" min="1" max="100" class="slider" id="myRange">
+                <input v-model="conteudo.opcoes[1].texto" size="10" class="form-control" />
+            </div>
+            <div v-if="index != conteudoDesenhoEditando" style="text-align: center;">
+                <span class="escalaLeft">{{ conteudo.opcoes[0].texto}}</span>
+                <input type="range" v-model.number="conteudo.resposta.valor" min="1" max="100" class="slider" id="myRange">
+                <span class="escalaRight">{{ conteudo.opcoes[1].texto}}</span>
+            </div>
+        </div>
+        <div v-if="conteudo.tipo == 13">
+            <h5>
+                <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
+                <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+            </h5>
+            <div v-if="index != conteudoDesenhoEditando">
+                <input type="number" min="18" v-model.lazy="conteudo.resposta.texto" class="form-control">
+            </div>
+        </div>
+    </div>
+    
+    <div v-bind:class="{ 'form-group has-error': conteudo.resposta.texto == '' && tentouPassarDesenho && conteudo.obrigatorio }">
+        <div v-if="conteudo.tipo == 7">
+            <h5>
+                <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
+                <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+            </h5>
+            <div v-if="index != conteudoDesenhoEditando">
+                <input type="text" class="form-control" v-model.lazy="conteudo.resposta.texto" placeholder="Digite sua resposta">
+            </div>
+        </div>
+        <div v-if="conteudo.tipo == 8">
+            <h5>
+                <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
+                <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+            </h5>
+            <div v-if="index != conteudoDesenhoEditando">
+                <textarea class="form-control" rows="5" v-model.lazy="conteudo.resposta.texto" placeholder="Digite sua resposta" style="resize: none"></textarea>
+            </div>
+        </div>
+    </div>
+    
     <div v-if="conteudo.tipo == 6">
         <div v-if="index == conteudoDesenhoEditando">
             <table class="table table-striped table-bordered table-sm">
@@ -127,24 +170,6 @@
                     </td>
                 </tr>
             </table>
-        </div>
-    </div>
-    <div v-if="conteudo.tipo == 7">
-        <h5>
-            <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
-            <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
-        </h5>
-        <div v-if="index != conteudoDesenhoEditando">
-            <input type="text" class="form-control" v-model.lazy="conteudo.resposta.texto" placeholder="Digite sua resposta">
-        </div>
-    </div>
-    <div v-if="conteudo.tipo == 8">
-        <h5>
-            <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
-            <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
-        </h5>
-        <div v-if="index != conteudoDesenhoEditando">
-            <textarea class="form-control" rows="5" v-model.lazy="conteudo.resposta.texto" placeholder="Digite sua resposta" style="resize: none"></textarea>
         </div>
     </div>
     <div v-if="conteudo.tipo == 9">
@@ -195,15 +220,6 @@
                     </span>
                 </div>
             </button>
-        </div>
-    </div>
-    <div v-if="conteudo.tipo == 13">
-        <h5>
-            <span v-if="index != conteudoDesenhoEditando">{{ conteudo.texto }}</span>
-            <input v-if="index == conteudoDesenhoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
-        </h5>
-        <div v-if="index != conteudoDesenhoEditando">
-            <input type="number" min="18" v-model.lazy="conteudo.resposta.texto" class="form-control">
         </div>
     </div>
 </div>

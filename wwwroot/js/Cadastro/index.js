@@ -19,7 +19,7 @@ var dimensaoPagina = {
     3: "600px"
 }
 
-var TipoConteudo  = {
+var TipoConteudo = {
     MultiplaEscolha: 1,
     CaixaSelecao: 2,
     ListaSuspensa: 3,
@@ -36,7 +36,8 @@ var TipoConteudo  = {
     CaixaConfirmacao: 14,
     RespostaPesquisa: 15,
     Botao: 16,
-    Data: 17
+    Data: 17,
+    Email: 18
 }
 
 var TipoDesenho = {
@@ -79,10 +80,10 @@ function ConteudoDesenho(conteudoDesenho) {
     self.resposta = [];
 
     if (conteudoDesenho) {
-        if (conteudoDesenho.Opcoes){
-            conteudoDesenho.Opcoes.sort(function(a, b){
-                if(a.Id < b.Id) return -1;
-                if(a.Id > b.Id) return 1;
+        if (conteudoDesenho.Opcoes) {
+            conteudoDesenho.Opcoes.sort(function (a, b) {
+                if (a.Id < b.Id) return -1;
+                if (a.Id > b.Id) return 1;
                 return 0;
             });
             conteudoDesenho.Opcoes.forEach(function (opcao) {
@@ -141,7 +142,7 @@ function ConteudoDesenho(conteudoDesenho) {
 function OpcaoResposta(opcaoResposta) {
     console.log("Adicionando opcaoResposta", opcaoResposta);
     var self = this;
-    self.id = opcaoResposta ? opcaoResposta.Id :  0;
+    self.id = opcaoResposta ? opcaoResposta.Id : 0;
     self.valor = opcaoResposta ? opcaoResposta.Valor : 0;
 
     self.respostaId = opcaoResposta ? opcaoResposta.RespostaId : 0;;
@@ -179,7 +180,7 @@ function RestricaoConteudoPagina(restricaoConteudoPagina) {
     self.conteudoIndex = 0;
     self.opcaoId = restricaoConteudoPagina ? restricaoConteudoPagina.OpcaoId : 0;
 
-    self.adicionarConteudoIndex = function(conteudos) {
+    self.adicionarConteudoIndex = function (conteudos) {
         conteudos.forEach(function (e, i, a) {
             if (e.id == self.conteudoId) {
                 self.conteudoIndex = i;
@@ -200,7 +201,7 @@ function RestricaoConteudo(restricaoConteudo) {
     self.conteudoAlvoId = restricaoConteudo ? restricaoConteudo.ConteudoAlvoId : 0;
     self.conteudoIndex = -1;
     self.opcaoAlvoId = restricaoConteudo ? restricaoConteudo.OpcaoAlvoId : 0;
-    
+
     self.adicionarPaginaIndex = function (paginas) {
         console.log("paginaAlvoId", self.paginaAlvoId);
         paginas.forEach(function (e, i, a) {
@@ -245,11 +246,11 @@ function RestricaoPagina(restricaoPagina) {
     self.paginaId = restricaoPagina ? restricaoPagina.PaginaId : 0;
     self.proximaPaginaId = restricaoPagina ? restricaoPagina.ProximaPaginaId : 0;
 
-    self.adicionarConteudo = function(){
+    self.adicionarConteudo = function () {
         console.log("asd");
         self.restricoesConteudosPagina.push(new RestricaoConteudoPagina());
     }
-    self.removerConteudo = function(index){
+    self.removerConteudo = function (index) {
         self.restricoesConteudosPagina.splice(index, 1);
     }
 }
@@ -259,14 +260,14 @@ function Formulario(formulario) {
     var self = this;
     self.id = formulario ? formulario.Id : 0;
     self.nome = formulario ? formulario.Nome : "";
-    
+
     self.paginas = [];
     if (formulario && formulario.Paginas) {
         formulario.Paginas.forEach(function (pagina) {
             self.paginas.push(new Pagina(pagina));
         })
     }
-    
+
     self.novaPagina = function () {
         var novaPagina = new Pagina();
         novaPagina.formularioId = self.id;
@@ -274,7 +275,7 @@ function Formulario(formulario) {
             var result = response.body;
             console.log(response.body);
             var paginaId = response.body.Id;
-            
+
             novaPagina.id = paginaId;
             self.paginas.push(novaPagina);
             App.paginaAtual = self.paginas.length - 1;
@@ -343,7 +344,7 @@ function Pagina(pagina) {
     self.dimensao = pagina ? pagina.Dimensao : 0;
     self.final = pagina ? pagina.Final : false;
     self.sequencia = pagina ? pagina.Sequencia : 0;
-    
+
     self.conteudos = [];
     self.restricoes = [];
     if (pagina) {
@@ -382,7 +383,7 @@ function Pagina(pagina) {
 
         App.mostrarFormulario();
     }
-    
+
     self.excluirConteudo = function (conteudo, index) {
         if (conteudo.id != 0) {
             App.$http.post(urlExcluirConteudo, JSON.stringify(conteudo)).then(response => {
@@ -402,7 +403,7 @@ function Pagina(pagina) {
         }
     }
 
-    self.adicionarRestricao = function(){
+    self.adicionarRestricao = function () {
         var restricao = new RestricaoPagina();
         restricao.paginaId = self.id;
         restricao.adicionarConteudo();
@@ -446,7 +447,7 @@ function Pagina(pagina) {
         self.conteudos.forEach(function (conteudo, index) {
             conteudo.sequencia = index;
         })
-        
+
         App.$http.post(urlAtualizarSequenciaConteudos, JSON.stringify(self.conteudos)).then(response => {
             var result = response.body;
             console.log(response.body);
@@ -473,10 +474,10 @@ function Conteudo(conteudo) {
     self.respostas = [];
     self.conteudosDesenhos = [];
     if (conteudo) {
-        if (conteudo.Opcoes){
-            conteudo.Opcoes.sort(function(a, b){
-                if(a.Id < b.Id) return -1;
-                if(a.Id > b.Id) return 1;
+        if (conteudo.Opcoes) {
+            conteudo.Opcoes.sort(function (a, b) {
+                if (a.Id < b.Id) return -1;
+                if (a.Id > b.Id) return 1;
                 return 0;
             });
             conteudo.Opcoes.forEach(function (opcao) {
@@ -519,10 +520,10 @@ function Conteudo(conteudo) {
     self.adicionarOpcao = function () {
         self.opcoes.push(new Opcao({ ConteudoId: self.id, Valor: 0 }));
     }
-    self.removerOpcao = function(index){
+    self.removerOpcao = function (index) {
         self.opcoes.splice(index, 1);
     }
-    
+
     self.adicionarRestricao = function () {
         var restricao = new RestricaoConteudo();
         restricao.conteudoId = self.id;
@@ -534,7 +535,7 @@ function Conteudo(conteudo) {
 
     self.ver = function () {
         console.log(self.restricoes.length);
-        if(self.restricoes.length > 0){
+        if (self.restricoes.length > 0) {
             var json = JSON.stringify(self.restricoes);
             console.log("rest", json);
         }
@@ -548,7 +549,7 @@ function Conteudo(conteudo) {
         self.paginaId = paginaId;
         console.log("conteudo", this);
         console.log("conteudo", JSON.stringify(this));
-        App.$http.post(urlSalvarConteudo, JSON.stringify(this) ).then(response => {
+        App.$http.post(urlSalvarConteudo, JSON.stringify(this)).then(response => {
             var result = response.body;
             console.log(response.body);
             var conteudoId = response.body.id;
@@ -650,7 +651,8 @@ var data = {
         { value: 14, text: 'Caixa de Confirmação' },
         { value: 15, text: 'Resposta com Pesquisa' },
         { value: 16, text: 'Botão' },
-        { value: 17, text: 'Data' }
+        { value: 17, text: 'Data' },
+        { value: 18, text: 'Email' }
     ],
     optionsDesenhos: [
         { value: 1, text: 'Múltipla Escolha' },
@@ -675,17 +677,17 @@ var data = {
     editandoTitulo: false,
     adicionandoConteudo: false
 };
-window.App = new Vue({ 
-    el: '#cadastro', 
+window.App = new Vue({
+    el: '#cadastro',
     data: data,
     methods: {
-        editarConteudo: function(index){
+        editarConteudo: function (index) {
             console.log("editarConteudo", index);
             this.conteudoEditando = index;
             this.adicionandoConteudo = false;
             //console.log("index", this.pagina.conteudos[index]);
         },
-        mouseEnter: function(index){
+        mouseEnter: function (index) {
             console.log(index);
             // this.editando[index] = !this.editando[index];
             Vue.set(this.editando, index, true)
@@ -697,7 +699,7 @@ window.App = new Vue({
             Vue.set(this.editando, index, false)
             // vm.items.splice(indexOfItem, 1, newValue)
         },
-        selecionarTipoConteudo: function(index){
+        selecionarTipoConteudo: function (index) {
             this.selecionado = index;
             var conteudo = new Conteudo();
             conteudo.tipo = index;

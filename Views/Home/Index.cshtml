@@ -6,6 +6,8 @@
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 <link href="~/css/Projeto.css" rel="stylesheet" />
 
+<link rel="stylesheet" href="~/lib/Css/bootstrap-datetimepicker.min.css">
+
 @Html.Partial("_Mapa")
 <div class="flex-center position-ref full-height">
     <div class="content">
@@ -16,6 +18,7 @@
                         @Html.Partial("_PageHeader")
                     </div>
                     <div class="pageBody" id="pageBody">
+                        <!-- <input type="text" class="form-control dataInput" id="example"> -->
                         @Html.Partial("_PageBody")
                     </div>
 
@@ -45,7 +48,7 @@
                         <div style="text-align: center;">
                             <!-- <button class="btn btn-danger" v-on:click="cancelarDesenho()">Cancelar</button> -->
                             <button class="btn btn-danger" v-on:click="selecionarDesenhoExcluir()"><span class="fa fa-trash"></span></button>
-                            <button class="btn btn-success" v-on:click="abrirConteudosDesenhos()">Confirmar</button>
+                            <button class="btn btn-success" v-on:click="abrirConteudosDesenhos()" :disabled="formulario.paginas[paginaAtual].conteudos[conteudoSelecionado].resposta.desenhos.length == 0" >Confirmar</button>
                         </div>
                     </div>
                     <div v-if="selecionandoDesenhoExcluir == true">
@@ -60,6 +63,7 @@
 
 
 @section Scripts {
+    <script src="~/lib/Plugins/bootstrap-datetimepicker.min.js"></script>
     <script>
         var rota = "@Url.Action("Teste")";
         var urlObterFormulariòParaEditar = "@Url.Action("ObterFormulariòParaEditar")";
@@ -89,6 +93,13 @@
             $('[data-toggle="popover"]').popover();
             //document.getElementById("map").style.display = "block";
         });
+        $(function () {
+            //$('.dataInput').datetimepicker({
+            //    format: 'L',
+            //    maxDate: moment().subtract(18, 'years').calendar()
+            //});
+        });
+
         $(function () {
             //$('#datetimepicker5').datetimepicker();
         });

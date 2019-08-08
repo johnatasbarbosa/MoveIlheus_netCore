@@ -243,4 +243,13 @@
             <input type="text" class="form-control">
         </div>
     </div>
+    <div v-if="conteudo.tipo == 18">
+        <h5>
+            <span v-if="index != conteudoEditando">{{ conteudo.texto }}</span>
+            <input v-if="index == conteudoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+        </h5>
+        <div v-if="index != conteudoEditando">
+            <input type="text" class="form-control">
+        </div>
+    </div>
 </div>

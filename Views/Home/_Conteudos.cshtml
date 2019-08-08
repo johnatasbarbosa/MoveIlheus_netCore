@@ -87,9 +87,9 @@
                 <input v-model="conteudo.opcoes[1].texto" size="10" class="form-control" />
             </div>
             <div v-if="index != conteudoEditando" style="text-align: center;">
-                <span style="float: left">{{ conteudo.opcoes[0].texto}}</span>
+                <span class="escalaLeft">{{ conteudo.opcoes[0].texto}}</span>
                 <input type="range" v-model.number="conteudo.resposta.valor" min="1" max="100" class="slider" id="myRange">
-                <span style="float: right">{{ conteudo.opcoes[1].texto}}</span>
+                <span class="escalaRight">{{ conteudo.opcoes[1].texto}}</span>
             </div>
         </div>
         <div v-if="conteudo.tipo == 13">
@@ -128,33 +128,6 @@
             </h5>
             <div v-if="index != conteudoEditando">
                 <input id="pac-input" class="controls form-control" type="text" placeholder="Search Box">
-            </div>
-        </div>
-        <div v-if="conteudo.tipo == 17">
-            <h5>
-                <label v-if="index != conteudoEditando">{{ conteudo.texto }}</label>
-                <input v-if="index == conteudoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
-            </h5>
-            <div v-if="index != conteudoEditando">
-                <!-- <input type="text" class="form-control datetimepicker-input" id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5" placeholder="Insira a data de nascimento"/> -->
-                <input type="text" class="form-control" v-model.lazy="conteudo.resposta.texto" placeholder="Digite sua resposta">
-                <!-- <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
-                    <span class="input-group-addon" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                        <span class="fa fa-calendar"></span>
-                    </span>
-                </div> -->
-            </div>
-        </div>
-    </div>
-    <div v-bind:class="{ 'form-group has-error': conteudo.resposta.marcado == false && tentouPassar && conteudo.obrigatorio }">
-        <div v-if="conteudo.tipo == 14">
-            <h5>
-                <input v-if="index == conteudoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
-            </h5>
-            <div v-if="index != conteudoEditando" class="form-check">
-                <input type="checkbox" v-model="conteudo.resposta.marcado" class="form-check-input">
-                <label class="form-check-label">{{ conteudo.texto }}</label>
             </div>
         </div>
     </div>
@@ -260,6 +233,42 @@
         </h5>
         <div v-if="index != conteudoEditando">
             <a href="~/TCLE.pdf" download>{{ conteudo.texto }}</a>
+        </div>
+    </div>
+    <div v-bind:class="{ 'form-group has-error': conteudo.isValido() == false && tentouPassar }">
+        <div v-if="conteudo.tipo == 14">
+            <h5>
+                <input v-if="index == conteudoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+            </h5>
+            <div v-if="index != conteudoEditando" class="form-check">
+                <input type="checkbox" v-model="conteudo.resposta.marcado" class="form-check-input">
+                <label class="form-check-label">{{ conteudo.texto }}</label>
+            </div>
+        </div>
+        <div v-if="conteudo.tipo == 17">
+            <h5>
+                <label v-if="index != conteudoEditando">{{ conteudo.texto }}</label>
+                <input v-if="index == conteudoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+            </h5>
+            <div v-if="index != conteudoEditando">
+                <!-- <input type="text" class="form-control datetimepicker-input" id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5" placeholder="Insira a data de nascimento"/> -->
+                <input type="date" class="form-control" :id="'dataInput' + conteudo.id" :max="moment().subtract(18, 'years').format('YYYY-MM-DD')" v-model.lazy="conteudo.resposta.texto">
+                <!-- <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                    <span class="input-group-addon" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div> -->
+            </div>
+        </div>
+        <div v-if="conteudo.tipo == 18">
+            <h5>
+                <label v-if="index != conteudoEditando">{{ conteudo.texto }}</label>
+                <input v-if="index == conteudoEditando" v-model="conteudo.texto" placeholder="Insira a pergunta" class="form-control" type="text">
+            </h5>
+            <div v-if="index != conteudoEditando">
+                <input type="email" class="form-control" :id="'emailInput' + conteudo.id" v-model.lazy="conteudo.resposta.texto">
+            </div>
         </div>
     </div>
 </div>
