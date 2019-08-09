@@ -516,8 +516,10 @@ function Conteudo(conteudo) {
         else if (self.valor == 3)
             drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
             //drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+        else if (self.valor == 4)
+            drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
         
-        if(self.valor == 2)
+        if(self.valor == 2 || self.valor == 4)
             self.avancarProximo();
     }
 
@@ -535,6 +537,19 @@ function Conteudo(conteudo) {
             if(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].restricoesValidas == false){
                 App.avancarProximaPagina();
                 App.mostrarFormulario();
+            }
+            else{
+                console.log("valor", self.valor, App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor);
+                if(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor == 1)
+                    drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
+                else if (App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor == 2)
+                    drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
+                else if (App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor == 3)
+                    drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
+                else if (App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor == 4){
+                    drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
+                    eventoClick();
+                }
             }
         }
         else{
@@ -871,6 +886,11 @@ window.App = new Vue({
                     })
                 }
 
+                //retirando eventos do map
+                var gmDomHackSelect = $('.gm-style').children().eq(0);
+                gmDomHackSelect.off();
+                possuiEvento = false;
+
                 console.log("Configurando próxima página");
                 self.tentouPassar = false;
                 self.paginasRespondidas.push(proximaPagina);
@@ -1158,7 +1178,7 @@ window.App = new Vue({
             this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].resposta.desenhos.push(desenho);
             this.desenhoEditando = this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].resposta.desenhos.length - 1;
             this.editandoDesenho = false;
-            if(this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor != 2){
+            if(this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor != 2 && this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor != 4){
                 $("#defineLocalizacao").hide();
                 $("#boxLocalizacao").hide();
             }
@@ -1170,7 +1190,7 @@ window.App = new Vue({
             // })
 
             //super armengue
-            if(this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 2){
+            if(this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 2 || this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 4){
                 App.indexConteudoModal = 1;
             }
             else
@@ -1191,7 +1211,7 @@ window.App = new Vue({
             //    desenho.respostasDesenho.push(new RespostaDesenho());
             //})
                         
-            if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 2){
+            if (this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 2 || this.formulario.paginas[this.paginaAtual].conteudos[this.conteudoSelecionado].valor == 4){
                 //super armengue
                 App.formulario.paginas[App.paginaAtual].conteudos[App.indexConteudoModal].conteudosDesenhos.forEach(function(c){
                     var id = App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].id;
@@ -1240,7 +1260,7 @@ window.App = new Vue({
         exibirDefineLocalizacao: function () {
             console.log("exibirDefineLocalizacao");
             $("#defineLocalizacao").show();
-            if(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor == 2)
+            if(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor == 2 || App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor == 4)
                 $("#boxLocalizacao").show();
         },
         mostrarFormulario: function () {
@@ -1271,11 +1291,19 @@ window.App = new Vue({
         selecionarDesenhoExcluir: function(){
             this.selecionandoDesenhoExcluir = true;
             selecionarDesenhoExcluir();
+            comecouDesenharPolyline = false;
         },
         cancelarSelecionarDesenhoExcluir: function(){
             this.selecionandoDesenhoExcluir = false;
-            drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
+            if(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor == 2)
+                drawingManager.setDrawingMode(google.maps.drawing.OverlayType.MARKER);
+            
+            if(App.formulario.paginas[App.paginaAtual].conteudos[App.conteudoSelecionado].valor == 4)
+                drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYLINE);
             //selecionarDesenhoExcluir();
+            
+            comecouDesenharPolyline = true;
+            completouDesenho = false;
         },
         minimizarPagina: function () {
             console.log("minimizarPagina");

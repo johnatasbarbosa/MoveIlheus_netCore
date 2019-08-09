@@ -189,7 +189,7 @@
             <h4>{{ conteudo.texto }}</h4>
         </div>
     </div>
-    <div v-if="conteudo.tipo == 11 && (conteudo.valor != 2 || index == 1)">
+    <div v-if="conteudo.tipo == 11 && ((conteudo.valor != 2 && conteudo.valor != 4) || index == 1)">
         <div v-if="index == conteudoEditando">
             <button class="btn btn-default" style="width: 75%; min-height: 60px;">
                 <div style="width: 80%; float: left;">
@@ -197,9 +197,11 @@
                 </div>
                 <div style="width: 20%; float: right;">
                     <select v-model="conteudo.valor">
-                        <option value="1">Marker</option>
-                        <option value="2">Line</option>
-                        <option value="3">Polygon</option>
+                    <option value="1">Marker</option>
+                    <option value="2">Marker vários</option>
+                    <option value="3">Marker único</option>
+                    <option value="4">Line</option>
+                    <option value="5">Polygon</option>
                     </select>
                 </div>
             </button>
@@ -221,6 +223,10 @@
                         <span v-if="conteudo.valor == 3">
                             <img src="~/Images/icon_marker.png" style="width: 30px;" />
                             <!-- <img src="~/Images/icon_polygon.png" style="width: 30px;" /> -->
+                        </span>
+                        <span v-if="conteudo.valor == 4">
+                            <img src="~/Images/icon_marker.png" style="width: 30px;" />
+                            <!-- <img src="~/Images/icon_line.png" style="width: 30px;" /> -->
                         </span>
                     </div>
                 </button>

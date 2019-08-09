@@ -171,8 +171,10 @@
             <div style="width: 20%; float: right;">
                 <select v-model="conteudo.valor">
                     <option value="1">Marker</option>
-                    <option value="2">Line</option>
-                    <option value="3">Polygon</option>
+                    <option value="2">Marker vários</option>
+                    <option value="3">Marker único</option>
+                    <option value="4">Line</option>
+                    <option value="5">Polygon</option>
                 </select>
             </div>
             <input v-model="conteudo.tituloConteudosDesenho" />
@@ -193,6 +195,9 @@
                         </span>
                         <span v-if="conteudo.valor == 3">
                             <img src="~/Images/icon_polygon.png" style="width: 30px;" />
+                        </span>
+                        <span v-if="conteudo.valor == 4">
+                            <img src="~/Images/icon_line.png" style="width: 30px;" />
                         </span>
                     </div>
                 </button>
