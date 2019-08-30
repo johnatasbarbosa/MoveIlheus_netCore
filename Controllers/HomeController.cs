@@ -27,14 +27,17 @@ namespace MoveIlheus.Controllers
             //return View();
         }
 
-        public JsonResult FinalizarFormulario(Respondente respondente, DateTime inicio, DateTime fim)
+        public JsonResult FinalizarFormulario([FromBody] RespondenteViewModel respondente)
         {
-            respondente.Duracao = fim - inicio;
-            var result = servico.SalvarRespostas(respondente);
+            var resp = new Respondente();
+            resp.Email = respondente.Email;
+            resp.Duracao = respondente.Fim - respondente.Inicio;
+            resp.Respostas = respondente.Respostas;
+            var result = servico.SalvarRespostas(resp);
 
             return Json(result);
         }
-
+        
         public IActionResult Privacy()
         {
             return View();

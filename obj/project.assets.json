@@ -12193,11 +12193,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\johna\\Documents\\MoveIlheus\\MoveIlheus\\MoveIlheus.csproj",
+      "projectUniqueName": "F:\\Organizar\\MoveIlheus\\MoveIlheus\\MoveIlheus.csproj",
       "projectName": "MoveIlheus",
-      "projectPath": "C:\\Users\\johna\\Documents\\MoveIlheus\\MoveIlheus\\MoveIlheus.csproj",
+      "projectPath": "F:\\Organizar\\MoveIlheus\\MoveIlheus\\MoveIlheus.csproj",
       "packagesPath": "C:\\Users\\johna\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\johna\\Documents\\MoveIlheus\\MoveIlheus\\obj\\",
+      "outputPath": "F:\\Organizar\\MoveIlheus\\MoveIlheus\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

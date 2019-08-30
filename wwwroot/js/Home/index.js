@@ -236,7 +236,7 @@ function Resposta(resposta) {
     var self = this;
     self.id = resposta ? resposta.Id : 0;
     self.texto = resposta ? (resposta.Texto ? resposta.Texto : "") : "";
-    self.valor = resposta ? (resposta.Valor ? resposta.Valor : null) : null;
+    self.valor = resposta ? (resposta.Valor ? resposta.Valor : 0) : 0;
     self.marcado = resposta ? (resposta.Marcado ? resposta.Marcado : false) : false;
 
     self.opcoesView = [];
@@ -715,6 +715,16 @@ function Respondente(respondente) {
     self.respostas = [];
 }
 
+function RespondenteViewModel(id, email, inicio, fim, respostas) {
+    var self = this;
+    self.id = id;
+    self.email = email;
+    self.inicio = inicio;
+    self.fim = fim;
+
+    self.respostas = respostas;
+}
+
 var data = { 
     options: [
         { value: 1, text: 'Múltipla Escolha' },
@@ -1153,16 +1163,27 @@ window.App = new Vue({
                     }
                 })
             })
+
             console.log(respostas);
-            this.respondente.respostas = respostas;
-            //this.respondente.duracao = new Date().getTime() - this.respondente.duracao;
-            this.$http.post(urlFinalizarFormulario, JSON.stringify({ respondente: this.respondente, inicio: this.inicio, fim: new Date() })).then(response => {
+            
+            // this.respondente.email = App.formulario.paginas[2].conteudos[0].resposta.texto;
+            
+            var respondente = new RespondenteViewModel(0, App.formulario.paginas[2].conteudos[0].resposta.texto, this.inicio, new Date(), respostas);
+            // var respondente = {};
+            // respondente.id = 0;
+            // respondente.email = App.formulario.paginas[2].conteudos[0].resposta.texto;
+            // respondente.inicio = this.inicio;
+            // respondente.fim = new Date();
+            // respondente.respostas = respostas;
+            
+            console.log(JSON.stringify(respondente));
+            App.$http.post(urlFinalizarFormulario, JSON.stringify(respondente)).then(response => {
+            //this.$http.post(urlFinalizarFormulario, JSON.stringify({ respondente: this.respondente, inicio: this.inicio, fim: new Date() })).then(response => {
                 var result = response.body;
                 console.log(response.body);
 
-                //self.paginaAtual = self.formulario.paginas.length - 1;
-                self.avancarProximaPagina();
-                self.verificarConteudos();
+                // self.avancarProximaPagina();
+                // self.verificarConteudos();
             }, response => {
                 // error callback
             });

@@ -23,7 +23,11 @@ namespace MoveIlheus.Services
         
         public Formulario ObterFormulariòParaEditar()
         {
-            return contexto.Forms.Include("Paginas.Restricoes.RestricoesConteudosPagina").Include("Paginas.Conteudos.Opcoes").Include("Paginas.Conteudos.Restricoes").Include("Paginas.Conteudos.ConteudosDesenhos.Opcoes").FirstOrDefault();
+            var forms =  contexto.Forms.Include("Paginas.Restricoes.RestricoesConteudosPagina").Include("Paginas.Conteudos.Opcoes").Include("Paginas.Conteudos.Restricoes").Include("Paginas.Conteudos.ConteudosDesenhos.Opcoes").FirstOrDefault();
+            foreach(var p in forms.Paginas){
+                p.ProximaPagina = null;
+            }
+            return forms;
         }
 
         public ResultProcessing SalvarFormulario(Formulario formulario)
